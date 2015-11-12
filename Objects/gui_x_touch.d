@@ -1,0 +1,10 @@
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Sample\GUI_X\GUI_X_Touch.c
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_ConfDefaults.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUIConf.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_Type.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\LCD.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\Global.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_Version.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\Board\Board_Touch.h
+.\objects\gui_x_touch.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
