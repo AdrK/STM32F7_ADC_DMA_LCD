@@ -1,5 +1,6 @@
 --cpu Cortex-M7.fp.sp --fpu=FPv4-SP
 ".\objects\main.o"
+".\objects\adc config.o"
 ".\objects\ft5336.o"
 ".\objects\stm32746g_discovery.o"
 ".\objects\stm32746g_discovery_sdram.o"
@@ -11,6 +12,8 @@
 "C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib"
 ".\objects\rtx_conf_cm.o"
 ".\objects\stm32f7xx_hal.o"
+".\objects\stm32f7xx_hal_adc.o"
+".\objects\stm32f7xx_hal_adc_ex.o"
 ".\objects\stm32f7xx_hal_cortex.o"
 ".\objects\stm32f7xx_hal_dma.o"
 ".\objects\stm32f7xx_hal_dma2d.o"

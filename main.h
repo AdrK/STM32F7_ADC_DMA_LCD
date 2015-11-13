@@ -40,11 +40,18 @@
 #define __MAIN_H
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32f7xx.h"                  // Device header
 #include "stm32f7xx_hal.h"
+#include "stm32f7xx_hal_conf.h"         // Keil::Device:STM32Cube Framework:Classic
+#include "stm32746g_discovery_sdram.h"  // Keil.STM32F746G-Discovery::Board Support:Drivers:SDRAM
+
+#include "Board_LED.h"                  // ::Board Support:LED
+#include "GUI.h"                        // Segger.MDK-Pro::Graphics:CORE
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+#define ADC_BUFFER_LENGTH 2048
 /* Exported functions ------------------------------------------------------- */
 
 #endif /* __MAIN_H */

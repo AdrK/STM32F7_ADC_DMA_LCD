@@ -28,6 +28,8 @@
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma_ex.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cortex.h
+.\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_adc.h
+.\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_adc_ex.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma2d.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash_ex.h

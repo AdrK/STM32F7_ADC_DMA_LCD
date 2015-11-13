@@ -66,21 +66,63 @@ uint32_t HAL_GetTick(void) {
   * @{
   */ 
 
-#include "stm32746g_discovery_sdram.h"  // Keil.STM32F746G-Discovery::Board Support:Drivers:SDRAM
-#include "Board_LED.h"                  // ::Board Support:LED
-#include "GUI.h"                        // Segger.MDK-Pro::Graphics:CORE
+
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define ADC_BUFFER_LENGTH 2048
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+ADC_HandleTypeDef g_AdcHandle;
+signed short values[ADC_BUFFER_LENGTH];
+static volatile uint16_t IRQ_EdgeCTR=0;
+
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void MPU_Config(void);
 static void CPU_CACHE_Enable(void);
+extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
 
 /* Private functions ---------------------------------------------------------*/
+uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Signal, uint16_t Sig_Size){
+	uint8_t  Previous=0;
+	uint8_t  Current=0;
+	uint8_t  Next=0;
+	uint16_t Last=0;
+	
+	uint16_t Count=0;
+	uint16_t i=0;
+		
+	for( i=0;	i<Sig_Size;	i++ )
+		{
+	Previous = Signal[i]>>1;
+	Current  = Signal[i+1]>>1;
+	Next 		 = Signal[i+3]>>1;
+	Last		 = Signal[i+4]>>1;
+
+	if( (Current - Previous) >=2)
+	{
+		Count++;
+	}
+
+	if((Next - Previous)>=4)
+	{
+		Count++;
+		Count++;
+	}
+
+	if( Count == Treshold ) return (i-10);
+
+	if( (Current - Previous) >= Jmp_Treshold ) return (i-10);
+
+	if( (Next - Previous) >= Jmp_Treshold ) return (i-8);
+
+	if( (Last - Previous) >= Jmp_Treshold ) return (i-7);
+			
+		}
+	return 0;
+}
 
 /**
   * @brief  Main program
@@ -89,6 +131,7 @@ static void CPU_CACHE_Enable(void);
   */
 int main(void)
 {
+	uint16_t i;
   /* This project template calls firstly two functions in order to configure MPU feature 
      and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable().
      These functions are provided as template implementation that User may integrate 
@@ -137,11 +180,28 @@ int main(void)
 	GUI_SetPenSize(20);
 	GUI_SetColor(GUI_RED);
 	GUI_SetTextMode(GUI_TM_NORMAL);
-	GUI_DispStringHCenterAt("Hello World" , 240, 200);
+	GUI_DispStringHCenterAt("Oscyloskop v1.0" , 250, 200);
+	
+	ADC_INIT(&g_AdcHandle);
+	HAL_ADC_Start(&g_AdcHandle);
 	/* Infinite loop */
   while (1)
   {
-		
+	 for(i = 0; i<ADC_BUFFER_LENGTH;i++)
+		{
+			if (HAL_ADC_PollForConversion(&g_AdcHandle, 1000000) == HAL_OK)
+			{
+				values[i] = HAL_ADC_GetValue(&g_AdcHandle);
+				//i++;
+			}
+		}
+	IRQ_EdgeCTR = RisingEdge(25, 50, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
+	
+	if(IRQ_EdgeCTR > (ADC_BUFFER_LENGTH-481)) IRQ_EdgeCTR=1024;
+	
+	GUI_Delay(40);
+	GUI_Clear();
+	GUI_DrawGraph((short*)&values[IRQ_EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)		
   }
 }
 
@@ -165,8 +225,7 @@ int main(void)
   * @param  None
   * @retval None
   */
-static void SystemClock_Config(void)
-{
+static void SystemClock_Config(void){
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
   RCC_OscInitTypeDef RCC_OscInitStruct;
 
@@ -209,8 +268,7 @@ static void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-static void Error_Handler(void)
-{
+static void Error_Handler(void){
   /* User may add here some code to deal with this error */
   while(1)
   {
@@ -224,8 +282,7 @@ static void Error_Handler(void)
   * @param  None
   * @retval None
   */
-static void MPU_Config(void)
-{
+static void MPU_Config(void){
   MPU_Region_InitTypeDef MPU_InitStruct;
   
   /* Disable the MPU */
@@ -255,8 +312,7 @@ static void MPU_Config(void)
   * @param  None
   * @retval None
   */
-static void CPU_CACHE_Enable(void)
-{
+static void CPU_CACHE_Enable(void){
   /* Enable I-Cache */
   SCB_EnableICache();
 
