@@ -70,13 +70,13 @@ uint32_t HAL_GetTick(void) {
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define ADC_BUFFER_LENGTH 2048
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef g_AdcHandle;
 signed short values[ADC_BUFFER_LENGTH];
 static volatile uint16_t IRQ_EdgeCTR=0;
-
+uint8_t IRQ_FLAG=0;
+uint16_t i=0;
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
@@ -85,6 +85,9 @@ static void CPU_CACHE_Enable(void);
 extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
 
 /* Private functions ---------------------------------------------------------*/
+//static __INLINE void __enable_irq()               { __ASM volatile ("cpsie i"); }
+//static __INLINE void __disable_irq()              { __ASM volatile ("cpsid i"); }
+
 uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Signal, uint16_t Sig_Size){
 	uint8_t  Previous=0;
 	uint8_t  Current=0;
@@ -131,7 +134,7 @@ uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Sign
   */
 int main(void)
 {
-	uint16_t i;
+
   /* This project template calls firstly two functions in order to configure MPU feature 
      and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable().
      These functions are provided as template implementation that User may integrate 
@@ -183,25 +186,22 @@ int main(void)
 	GUI_DispStringHCenterAt("Oscyloskop v1.0" , 250, 200);
 	
 	ADC_INIT(&g_AdcHandle);
-	HAL_ADC_Start(&g_AdcHandle);
+	HAL_ADC_Start_IT(&g_AdcHandle);
 	/* Infinite loop */
   while (1)
   {
-	 for(i = 0; i<ADC_BUFFER_LENGTH;i++)
+		GUI_Delay(40);
+		if(IRQ_FLAG)
 		{
-			if (HAL_ADC_PollForConversion(&g_AdcHandle, 1000000) == HAL_OK)
-			{
-				values[i] = HAL_ADC_GetValue(&g_AdcHandle);
-				//i++;
-			}
+			IRQ_EdgeCTR = RisingEdge(25, 50, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
+
+			if(IRQ_EdgeCTR > (ADC_BUFFER_LENGTH-481)) IRQ_EdgeCTR=1024;
+			GUI_Clear();
+			GUI_DrawGraph((short*)&values[IRQ_EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)		
+			
+			IRQ_FLAG=0;
+			HAL_ADC_Start_IT(&g_AdcHandle);
 		}
-	IRQ_EdgeCTR = RisingEdge(25, 50, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
-	
-	if(IRQ_EdgeCTR > (ADC_BUFFER_LENGTH-481)) IRQ_EdgeCTR=1024;
-	
-	GUI_Delay(40);
-	GUI_Clear();
-	GUI_DrawGraph((short*)&values[IRQ_EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)		
   }
 }
 

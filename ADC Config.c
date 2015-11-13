@@ -1,7 +1,10 @@
 #include "main.h"
 
-//extern ADC_HandleTypeDef g_AdcHandle;
- 
+extern ADC_HandleTypeDef g_AdcHandle;
+extern signed short values[ADC_BUFFER_LENGTH];
+extern uint16_t i;
+extern uint8_t IRQ_FLAG;
+
 HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 {
 	GPIO_InitTypeDef gpioInit;
@@ -60,4 +63,20 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
     return HAL_ERROR;
   }
 	return HAL_OK;
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{
+	values[i++] = HAL_ADC_GetValue(&g_AdcHandle);
+	if(i>=2047)
+	{
+		HAL_ADC_Stop_IT(&g_AdcHandle);
+		i=0;
+		IRQ_FLAG=1;
+	}
+}
+
+void ADC_IRQHandler()
+{
+		HAL_ADC_IRQHandler(&g_AdcHandle);
 }
