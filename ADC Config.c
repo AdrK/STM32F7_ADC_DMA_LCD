@@ -1,11 +1,7 @@
-#include "GUI.h"
-#include "cmsis_os.h"                   // CMSIS RTOS header file
 #include "main.h"
 
-extern osThreadId tid_GUIThread; 
-/*extern*/ ADC_HandleTypeDef g_AdcHandle;
-/*extern*/ DMA_HandleTypeDef  g_DmaHandle;
-/*extern*/volatile uint32_t values[ADC_BUFFER_LENGTH];
+extern ADC_HandleTypeDef g_AdcHandle;
+extern signed short values[ADC_BUFFER_LENGTH];
 extern uint16_t i;
 extern uint8_t IRQ_FLAG;
 
@@ -34,7 +30,7 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 	AdcHandle->Init.DiscontinuousConvMode = DISABLE;
 	AdcHandle->Init.NbrOfDiscConversion = 0;
 	AdcHandle->Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-	AdcHandle->Init.ExternalTrigConv = ADC_SOFTWARE_START; //ADC_EXTERNALTRIGCONV_T1_CC1;
+	AdcHandle->Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T1_CC1;
 	AdcHandle->Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	AdcHandle->Init.NbrOfConversion = 1;
 	AdcHandle->Init.DMAContinuousRequests = ENABLE;
@@ -58,7 +54,7 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 		ADC_SAMPLETIME_144CYCLES
 		ADC_SAMPLETIME_480CYCLES
 	*/
-	adcChannel.SamplingTime = ADC_SAMPLETIME_15CYCLES;
+	adcChannel.SamplingTime = ADC_SAMPLETIME_28CYCLES;
 	adcChannel.Offset = 0;
 
   if (HAL_ADC_ConfigChannel(AdcHandle, &adcChannel) != HAL_OK)
@@ -69,49 +65,18 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef DMA_INIT(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle)
-{
-	__DMA2_CLK_ENABLE(); 
-	DmaHandle->Instance = DMA2_Stream0;
-
-	DmaHandle->Init.Channel  = DMA_CHANNEL_2;
-	DmaHandle->Init.Direction = DMA_PERIPH_TO_MEMORY;
-	DmaHandle->Init.PeriphInc = DMA_PINC_DISABLE;
-	DmaHandle->Init.MemInc = DMA_MINC_ENABLE;
-	DmaHandle->Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-	DmaHandle->Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-	DmaHandle->Init.Mode = DMA_CIRCULAR;
-	DmaHandle->Init.Priority = DMA_PRIORITY_HIGH;
-	DmaHandle->Init.FIFOMode = DMA_FIFOMODE_DISABLE;         
-	DmaHandle->Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
-	DmaHandle->Init.MemBurst = DMA_MBURST_SINGLE;
-	DmaHandle->Init.PeriphBurst = DMA_PBURST_SINGLE; 
-	
-		if (HAL_DMA_Init(DmaHandle) != HAL_OK)
-	{
-		/* ADC initialization Error */
-		return HAL_ERROR;
-	}
-	__HAL_LINKDMA(AdcHandle, DMA_Handle, g_DmaHandle);
-
-	HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);   
-	HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
-	
-	return HAL_OK;
-}
-
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
 {
-	osSignalSet(tid_GUIThread,0xF0F0);	
+	values[i++] = HAL_ADC_GetValue(&g_AdcHandle);
+	if(i>=2047)
+	{
+		HAL_ADC_Stop_IT(&g_AdcHandle);
+		i=0;
+		IRQ_FLAG=1;
+	}
 }
 
-void DMA2_Stream0_IRQHandler()
-{
-		HAL_DMA_IRQHandler(&g_DmaHandle);
-}
-		
 void ADC_IRQHandler()
 {
 		HAL_ADC_IRQHandler(&g_AdcHandle);
 }
-/****END OF FILE****/

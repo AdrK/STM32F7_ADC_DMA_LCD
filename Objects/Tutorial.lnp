@@ -1,6 +1,5 @@
 --cpu Cortex-M7.fp.sp --fpu=FPv4-SP
 ".\objects\main.o"
-".\objects\gui_singlethread.o"
 ".\objects\adc config.o"
 ".\objects\ft5336.o"
 ".\objects\stm32746g_discovery.o"
