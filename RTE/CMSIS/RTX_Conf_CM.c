@@ -69,14 +69,14 @@
 //   <i> Defines the number of threads with user-provided stack size.
 //   <i> Default: 0
 #ifndef OS_PRIVCNT
- #define OS_PRIVCNT     0
+ #define OS_PRIVCNT     1
 #endif
  
 //   <o>Total stack size [bytes] for threads with user-provided stack size <0-1048576:8><#/4>
 //   <i> Defines the combined stack size for threads with user-provided stack size.
 //   <i> Default: 0
 #ifndef OS_PRIVSTKSIZE
- #define OS_PRIVSTKSIZE 0       // this stack size value is in words
+ #define OS_PRIVSTKSIZE 2048       // this stack size value is in words
 #endif
  
 //   <q>Stack overflow checking
@@ -90,7 +90,7 @@
 //   <i> Initialize thread stack with watermark pattern for analyzing stack usage (current/maximum) in System and Thread Viewer.
 //   <i> Enabling this option increases significantly the execution time of osThreadCreate.
 #ifndef OS_STKINIT
-#define OS_STKINIT      0
+#define OS_STKINIT      1
 #endif
  
 //   <o>Processor mode for thread execution 
@@ -165,14 +165,14 @@
 //   <i> Defines priority for Timer Thread
 //   <i> Default: High
 #ifndef OS_TIMERPRIO
- #define OS_TIMERPRIO   5
+ #define OS_TIMERPRIO   6
 #endif
  
 //   <o>Timer Thread stack size [bytes] <64-4096:8><#/4>
 //   <i> Defines stack size for Timer thread.
 //   <i> Default: 200
 #ifndef OS_TIMERSTKSZ
- #define OS_TIMERSTKSZ  256     // this stack size value is in words
+ #define OS_TIMERSTKSZ  512     // this stack size value is in words
 #endif
  
 //   <o>Timer Callback Queue size <1-32>
@@ -226,6 +226,7 @@ void os_idle_demon (void) {
  
   for (;;) {
     /* HERE: include optional user code to be executed when no thread runs.*/
+		__wfe();
   }
 }
  

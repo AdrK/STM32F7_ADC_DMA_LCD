@@ -38,12 +38,5 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart_ex.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\Board\Board_LED.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_ConfDefaults.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUIConf.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_Type.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\LCD.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\Global.h
-.\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_Version.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

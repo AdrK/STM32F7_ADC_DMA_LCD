@@ -52,80 +52,33 @@
 
 #ifdef RTE_CMSIS_RTOS_RTX
 extern uint32_t os_time;
-
 uint32_t HAL_GetTick(void) { 
   return os_time; 
 }
 #endif
 
-/** @addtogroup STM32F7xx_HAL_Examples
-  * @{
-  */
-
-/** @addtogroup Templates
-  * @{
-  */ 
-
-
-
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef g_AdcHandle;
-signed short values[ADC_BUFFER_LENGTH];
-static volatile uint16_t IRQ_EdgeCTR=0;
-uint8_t IRQ_FLAG=0;
-uint16_t i=0;
+
+extern ADC_HandleTypeDef g_AdcHandle;
+extern DMA_HandleTypeDef  g_DmaHandle;
+extern uint32_t  values[ADC_BUFFER_LENGTH];
+
 /* Private function prototypes -----------------------------------------------*/
+
+//Static
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void MPU_Config(void);
 static void CPU_CACHE_Enable(void);
+//Extern
+extern int Init_GUIThread (void);
 extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
+extern HAL_StatusTypeDef DMA_INIT(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle);
 
 /* Private functions ---------------------------------------------------------*/
-//static __INLINE void __enable_irq()               { __ASM volatile ("cpsie i"); }
-//static __INLINE void __disable_irq()              { __ASM volatile ("cpsid i"); }
-
-uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Signal, uint16_t Sig_Size){
-	uint8_t  Previous=0;
-	uint8_t  Current=0;
-	uint8_t  Next=0;
-	uint16_t Last=0;
-	
-	uint16_t Count=0;
-	uint16_t i=0;
-		
-	for( i=0;	i<Sig_Size;	i++ )
-		{
-	Previous = Signal[i]>>1;
-	Current  = Signal[i+1]>>1;
-	Next 		 = Signal[i+3]>>1;
-	Last		 = Signal[i+4]>>1;
-
-	if( (Current - Previous) >=2)
-	{
-		Count++;
-	}
-
-	if((Next - Previous)>=4)
-	{
-		Count++;
-		Count++;
-	}
-
-	if( Count == Treshold ) return (i-10);
-
-	if( (Current - Previous) >= Jmp_Treshold ) return (i-10);
-
-	if( (Next - Previous) >= Jmp_Treshold ) return (i-8);
-
-	if( (Last - Previous) >= Jmp_Treshold ) return (i-7);
-			
-		}
-	return 0;
-}
 
 /**
   * @brief  Main program
@@ -134,75 +87,36 @@ uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Sign
   */
 int main(void)
 {
-
-  /* This project template calls firstly two functions in order to configure MPU feature 
-     and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable().
-     These functions are provided as template implementation that User may integrate 
-     in his application, to enhance the performance in case of use of AXI interface 
-     with several masters. */ 
-  
-  /* Configure the MPU attributes as Write Through */
-  MPU_Config();
-
-  /* Enable the CPU Cache */
+	uint16_t i=0;	
+	for(i=0;i<ADC_BUFFER_LENGTH;i++)
+		values[i]=i;
+	
+	MPU_Config();
   CPU_CACHE_Enable();
 
-#ifdef RTE_CMSIS_RTOS                   // when using CMSIS RTOS
   osKernelInitialize();                 // initialize CMSIS-RTOS
-#endif
-
-  /* STM32F7xx HAL library initialization:
-       - Configure the Flash ART accelerator on ITCM interface
-       - Configure the Systick to generate an interrupt each 1 msec
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
   HAL_Init();
 	BSP_SDRAM_Init();
-	GUI_Init();
-	
-  /* Configure the System clock to have a frequency of 216 MHz */
+	LED_Initialize();
   SystemClock_Config();
 
-
-  /* Add your application code here
-     */
-
-#ifdef RTE_CMSIS_RTOS                   // when using CMSIS RTOS
-  // create 'thread' functions that start executing,
-  // example: tid_name = osThreadCreate (osThread(name), NULL);
+	if( Init_GUIThread() !=0 )
+		Error_Handler();
 
   osKernelStart();                      // start thread execution 
-#endif
-
-  
-	GUI_Clear();
-	GUI_SetFont(&GUI_Font32_1);
-	GUI_SetBkColor(GUI_BLACK);
-	GUI_Clear();
-	GUI_SetPenSize(20);
-	GUI_SetColor(GUI_RED);
-	GUI_SetTextMode(GUI_TM_NORMAL);
-	GUI_DispStringHCenterAt("Oscyloskop v1.0" , 250, 200);
 	
-	ADC_INIT(&g_AdcHandle);
-	HAL_ADC_Start_IT(&g_AdcHandle);
-	/* Infinite loop */
-  while (1)
-  {
-		GUI_Delay(40);
-		if(IRQ_FLAG)
-		{
-			IRQ_EdgeCTR = RisingEdge(25, 50, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
-
-			if(IRQ_EdgeCTR > (ADC_BUFFER_LENGTH-481)) IRQ_EdgeCTR=1024;
-			GUI_Clear();
-			GUI_DrawGraph((short*)&values[IRQ_EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)		
-			
-			IRQ_FLAG=0;
-			HAL_ADC_Start_IT(&g_AdcHandle);
-		}
-  }
+	if(DMA_INIT(&g_DmaHandle, &g_AdcHandle) != HAL_OK)
+		Error_Handler();
+	
+	if(ADC_INIT(&g_AdcHandle) != HAL_OK)
+		Error_Handler();
+	
+	if(HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH) != HAL_OK)
+		Error_Handler();
+	
+	osThreadTerminate(osThreadGetId());
+	
+	return 0;
 }
 
 /**
@@ -270,8 +184,28 @@ static void SystemClock_Config(void){
   */
 static void Error_Handler(void){
   /* User may add here some code to deal with this error */
+	
+	/*
+	switch(Err_Code)
+		case:
+	...
+	...
+	...
+		*/	
   while(1)
   {
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(100);
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(100);
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(500);
   }
 }
 
@@ -335,18 +269,12 @@ void assert_failed(uint8_t* file, uint32_t line)
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
   /* Infinite loop */
-  while (1)
-  {
+	Error_Handler();
+  /*while (1)
+  {		
   }
+	*/
 }
 #endif
 
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-  */ 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/****END OF FILE****/
