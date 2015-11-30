@@ -1,7 +1,8 @@
 #include "main.h"
 
 extern ADC_HandleTypeDef g_AdcHandle;
-extern signed short values[ADC_BUFFER_LENGTH];
+extern DMA_HandleTypeDef  g_DmaHandle;
+extern uint32_t values[ADC_BUFFER_LENGTH];
 extern uint16_t i;
 extern uint8_t IRQ_FLAG;
 
@@ -65,17 +66,49 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 	return HAL_OK;
 }
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle)
 {
-	values[i++] = HAL_ADC_GetValue(&g_AdcHandle);
-	if(i>=2047)
-	{
-		HAL_ADC_Stop_IT(&g_AdcHandle);
-		i=0;
-		IRQ_FLAG=1;
-	}
+    __DMA2_CLK_ENABLE(); 
+    DmaHandle->Instance = DMA2_Stream0;
+  
+    DmaHandle->Init.Channel  = DMA_CHANNEL_2;
+    DmaHandle->Init.Direction = DMA_PERIPH_TO_MEMORY;
+    DmaHandle->Init.PeriphInc = DMA_PINC_DISABLE;
+    DmaHandle->Init.MemInc = DMA_MINC_ENABLE;
+    DmaHandle->Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    DmaHandle->Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    DmaHandle->Init.Mode = DMA_CIRCULAR;
+    DmaHandle->Init.Priority = DMA_PRIORITY_HIGH;
+    DmaHandle->Init.FIFOMode = DMA_FIFOMODE_DISABLE;         
+    DmaHandle->Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
+    DmaHandle->Init.MemBurst = DMA_MBURST_SINGLE;
+    DmaHandle->Init.PeriphBurst = DMA_PBURST_SINGLE; 
+    
+	
+	if (HAL_DMA_Init(DmaHandle) != HAL_OK)
+  {
+    /* Configuration Error */
+    return HAL_ERROR;
+  }    
+    __HAL_LINKDMA(AdcHandle, DMA_Handle, *DmaHandle);
+ 
+    HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);   
+    HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+	
+		return HAL_OK;
 }
 
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{
+	//HAL_ADC_Stop_DMA(&g_AdcHandle);
+	IRQ_FLAG=1;
+}
+
+ void DMA2_Stream0_IRQHandler()
+{
+		HAL_DMA_IRQHandler(&g_DmaHandle);
+}
+		
 void ADC_IRQHandler()
 {
 		HAL_ADC_IRQHandler(&g_AdcHandle);

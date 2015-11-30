@@ -72,9 +72,9 @@ uint32_t HAL_GetTick(void) {
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef g_AdcHandle;
-signed short values[ADC_BUFFER_LENGTH];
-static volatile uint16_t IRQ_EdgeCTR=0;
+ADC_HandleTypeDef  g_AdcHandle;
+DMA_HandleTypeDef  g_DmaHandle;
+uint32_t values[ADC_BUFFER_LENGTH];
 uint8_t IRQ_FLAG=0;
 uint16_t i=0;
 /* Private function prototypes -----------------------------------------------*/
@@ -82,46 +82,47 @@ static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void MPU_Config(void);
 static void CPU_CACHE_Enable(void);
+uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, uint32_t* Signal, uint16_t Sig_Size);
 extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
+extern HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle);
+
 
 /* Private functions ---------------------------------------------------------*/
 //static __INLINE void __enable_irq()               { __ASM volatile ("cpsie i"); }
 //static __INLINE void __disable_irq()              { __ASM volatile ("cpsid i"); }
 
-uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Signal, uint16_t Sig_Size){
-	uint8_t  Previous=0;
-	uint8_t  Current=0;
-	uint8_t  Next=0;
-	uint16_t Last=0;
+uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, uint32_t* Signal, uint16_t Sig_Size){
 	
-	uint16_t Count=0;
-	uint16_t i=0;
+	uint8_t  x_1, x_2, x_3, x_4 = 0;
+	uint16_t Count = 0;
+	uint16_t i = 0;
 		
-	for( i=0;	i<Sig_Size;	i++ )
-		{
-	Previous = Signal[i]>>1;
-	Current  = Signal[i+1]>>1;
-	Next 		 = Signal[i+3]>>1;
-	Last		 = Signal[i+4]>>1;
+	for( i=0;	i<Sig_Size-3;	i++ )
+		{			
+			x_1 = Signal[i];
+			x_2 = Signal[i+1];
+			x_3 = Signal[i+2];
+			x_4	= Signal[i+3];
 
-	if( (Current - Previous) >=2)
-	{
-		Count++;
-	}
+			if((x_2-x_1<=0) || (x_3-x_1<=0) || (x_4-x_1<=0))
+				Count &= 0x0000;
+				
+			if( ((x_2 - x_1) >= 2) && ((x_2 - x_1) < 5))
+				Count+=2;
 
-	if((Next - Previous)>=4)
-	{
-		Count++;
-		Count++;
-	}
+			if(((x_3 - x_1) >= 5) && ((x_3 - x_1) < 9))
+				Count+=4;
+			
+			if(((x_4 - x_1) >= 9) && (x_4 - x_1) < Jmp_Treshold)
+				Count+=9;			
 
-	if( Count == Treshold ) return (i-10);
+			if( Count >= Treshold ) return (i);
+			
+			if( (x_2 - x_1) >= Jmp_Treshold ) return (i);
 
-	if( (Current - Previous) >= Jmp_Treshold ) return (i-10);
+			if( (x_3 - x_1) >= Jmp_Treshold ) return (i);
 
-	if( (Next - Previous) >= Jmp_Treshold ) return (i-8);
-
-	if( (Last - Previous) >= Jmp_Treshold ) return (i-7);
+			if( (x_4 - x_1) >= Jmp_Treshold ) return (i);
 			
 		}
 	return 0;
@@ -134,7 +135,8 @@ uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, signed short* Sign
   */
 int main(void)
 {
-
+	static volatile uint16_t EdgeCTR=0;
+	short values_TEMP[480];
   /* This project template calls firstly two functions in order to configure MPU feature 
      and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable().
      These functions are provided as template implementation that User may integrate 
@@ -182,25 +184,37 @@ int main(void)
 	GUI_Clear();
 	GUI_SetPenSize(20);
 	GUI_SetColor(GUI_RED);
-	GUI_SetTextMode(GUI_TM_NORMAL);
-	GUI_DispStringHCenterAt("Oscyloskop v1.0" , 250, 200);
+	GUI_SetTextMode(GUI_TM_NORMAL);	
 	
-	ADC_INIT(&g_AdcHandle);
-	HAL_ADC_Start_IT(&g_AdcHandle);
+	(void)ConfigureDMA(&g_DmaHandle, &g_AdcHandle);
+	(void)ADC_INIT(&g_AdcHandle);
+	
+	HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
+	
 	/* Infinite loop */
   while (1)
   {
 		GUI_Delay(40);
 		if(IRQ_FLAG)
 		{
-			IRQ_EdgeCTR = RisingEdge(25, 50, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
+			EdgeCTR = RisingEdge(15, 30, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
 
-			if(IRQ_EdgeCTR > (ADC_BUFFER_LENGTH-481)) IRQ_EdgeCTR=1024;
-			GUI_Clear();
-			GUI_DrawGraph((short*)&values[IRQ_EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)		
+			if(EdgeCTR > (ADC_BUFFER_LENGTH-481)) EdgeCTR=0;
 			
-			IRQ_FLAG=0;
-			HAL_ADC_Start_IT(&g_AdcHandle);
+			EdgeCTR=0;
+			
+			for(i=0;i<480;i++)
+			{
+				values_TEMP[i]=values[i];
+			}
+			
+			GUI_Clear();
+			GUI_DispStringHCenterAt("Interrupts" , 250, 200);
+			GUI_DrawGraph(/*(short*)*/&values_TEMP[EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)
+			
+			IRQ_FLAG &= 0x00;
+			
+			//HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
 		}
   }
 }
@@ -272,6 +286,18 @@ static void Error_Handler(void){
   /* User may add here some code to deal with this error */
   while(1)
   {
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(100);
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(100);
+		LED_On(0);
+		osDelay(100);
+		LED_Off(0);
+		osDelay(500);
   }
 }
 

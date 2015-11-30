@@ -27,6 +27,5 @@
 #define RTE_DEVICE_HAL_UART
 #define RTE_DEVICE_STARTUP_STM32F7XX    /* Device Startup for STM32F7 */
 #define RTE_Graphics_Core               /* Graphics Core */
-#define RTE_Graphics_Touchscreen        /* Graphics Input Device Touchscreen */
 
 #endif /* RTE_COMPONENTS_H */
