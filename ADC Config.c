@@ -3,8 +3,10 @@
 extern ADC_HandleTypeDef g_AdcHandle;
 extern DMA_HandleTypeDef  g_DmaHandle;
 extern uint32_t values[ADC_BUFFER_LENGTH];
-extern uint16_t i;
+extern volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
+uint16_t ctr;
 extern uint8_t IRQ_FLAG;
+extern osThreadId Main_thID;
 
 HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 {
@@ -55,7 +57,7 @@ HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 		ADC_SAMPLETIME_144CYCLES
 		ADC_SAMPLETIME_480CYCLES
 	*/
-	adcChannel.SamplingTime = ADC_SAMPLETIME_28CYCLES;
+	adcChannel.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 	adcChannel.Offset = 0;
 
   if (HAL_ADC_ConfigChannel(AdcHandle, &adcChannel) != HAL_OK)
@@ -92,16 +94,24 @@ HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* 
   }    
     __HAL_LINKDMA(AdcHandle, DMA_Handle, *DmaHandle);
  
-    HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);   
+    HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
 	
 		return HAL_OK;
 }
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
-{
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{	
 	//HAL_ADC_Stop_DMA(&g_AdcHandle);
-	IRQ_FLAG=1;
+	
+	//osSignalSet(Main_thID,DMA_ConvHalfCpltSig);
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{	
+	HAL_ADC_Stop_DMA(&g_AdcHandle);
+	osSignalSet(Main_thID,DMA_ConvCpltSig);
+	//HAL_GPIO_TogglePin (GPIOB, GPIO_PIN_14);
 }
 
  void DMA2_Stream0_IRQHandler()

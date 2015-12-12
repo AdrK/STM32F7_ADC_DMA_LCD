@@ -434,6 +434,12 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>GUI</GroupName>
+        </Group>
+        <Group>
+          <GroupName>Calculations</GroupName>
+        </Group>
+        <Group>
           <GroupName>::Board Support</GroupName>
         </Group>
         <Group>
@@ -461,6 +467,12 @@
         </targetInfos>
       </api>
       <api Capiversion="1.00" Cclass="Board Support" Cgroup="LED" exclusive="0">
+        <package name="MDK-Middleware" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="7.0.0-beta"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </api>
+      <api Capiversion="1.00" Cclass="Board Support" Cgroup="Touchscreen" exclusive="0">
         <package name="MDK-Middleware" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="7.0.0-beta"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
@@ -523,6 +535,12 @@
         </targetInfos>
       </component>
       <component Cbundle="STM32F746G-Discovery" Cclass="Board Support" Cgroup="LED" Cvendor="Keil" Cversion="1.0.0" condition="STM32F7 HAL GPIO">
+        <package name="STM32F7xx_DFP" schemaVersion="1.3" url="http://www.keil.com/pack" vendor="Keil" version="2.2.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="STM32F746G-Discovery" Cclass="Board Support" Cgroup="Touchscreen" Cvendor="Keil" Cversion="1.0.0" condition="STM32F746G-Discovery TS">
         <package name="STM32F7xx_DFP" schemaVersion="1.3" url="http://www.keil.com/pack" vendor="Keil" version="2.2.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>

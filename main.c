@@ -1,72 +1,10 @@
-/**
-  ******************************************************************************
-  * @file    Templates/Src/main.c 
-  * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    25-June-2015
-  * @brief   STM32F7xx HAL API Template project (with modifications from ARM)
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */
-
-/*
- * This file contains modifications by ARM to provide it as User Code Template
- * within the STM32 Device Family Pack.
- */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#ifdef _RTE_
-#include "RTE_Components.h"             // Component selection
-#endif
-#ifdef RTE_CMSIS_RTOS                   // when RTE component CMSIS RTOS is used
-#include "cmsis_os.h"                   // CMSIS RTOS header file
-#endif
-
-#ifdef RTE_CMSIS_RTOS_RTX
 extern uint32_t os_time;
-
 uint32_t HAL_GetTick(void) { 
   return os_time; 
 }
-#endif
-
-/** @addtogroup STM32F7xx_HAL_Examples
-  * @{
-  */
-
-/** @addtogroup Templates
-  * @{
-  */ 
-
-
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -74,57 +12,65 @@ uint32_t HAL_GetTick(void) {
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef  g_AdcHandle;
 DMA_HandleTypeDef  g_DmaHandle;
-uint32_t values[ADC_BUFFER_LENGTH];
-uint8_t IRQ_FLAG=0;
-uint16_t i=0;
+uint32_t values[ADC_BUFFER_LENGTH] __attribute__((at(0xC0400000)));
+volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
+osThreadId Main_thID;
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void MPU_Config(void);
 static void CPU_CACHE_Enable(void);
-uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, uint32_t* Signal, uint16_t Sig_Size);
+static uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq);
 extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
 extern HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle);
 
-
 /* Private functions ---------------------------------------------------------*/
-//static __INLINE void __enable_irq()               { __ASM volatile ("cpsie i"); }
-//static __INLINE void __disable_irq()              { __ASM volatile ("cpsid i"); }
 
-uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, uint32_t* Signal, uint16_t Sig_Size){
+/*	Questions
+		1. HOW TO: Data integrity
+		2. HOW TO: Take the full advantage of DMA !
+		3. Debuging
+			code profiler
+			system debug
+		4. Assert
+		4a. How to find memory leak or memory lack ??
+		5. DSP ??	
+		6. aquire to sRAM, or copy to sRAM
+		7. Adress alignment in DMA
+*/
+
+uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq) {
+
+	uint16_t i=0;
+	uint16_t ctr=0;
+	Sig_Size -=500;
 	
-	uint8_t  x_1, x_2, x_3, x_4 = 0;
-	uint16_t Count = 0;
-	uint16_t i = 0;
-		
-	for( i=0;	i<Sig_Size-3;	i++ )
-		{			
-			x_1 = Signal[i];
-			x_2 = Signal[i+1];
-			x_3 = Signal[i+2];
-			x_4	= Signal[i+3];
-
-			if((x_2-x_1<=0) || (x_3-x_1<=0) || (x_4-x_1<=0))
-				Count &= 0x0000;
-				
-			if( ((x_2 - x_1) >= 2) && ((x_2 - x_1) < 5))
-				Count+=2;
-
-			if(((x_3 - x_1) >= 5) && ((x_3 - x_1) < 9))
-				Count+=4;
-			
-			if(((x_4 - x_1) >= 9) && (x_4 - x_1) < Jmp_Treshold)
-				Count+=9;			
-
-			if( Count >= Treshold ) return (i);
-			
-			if( (x_2 - x_1) >= Jmp_Treshold ) return (i);
-
-			if( (x_3 - x_1) >= Jmp_Treshold ) return (i);
-
-			if( (x_4 - x_1) >= Jmp_Treshold ) return (i);
-			
+	for(i=0;i<=Sig_Size;i++)
+	{
+		if(Signal[i] >= Trig_SP)
+		{
+			ctr=i;
+			break;
 		}
+	}
+	
+	for(i=ctr;i<=Sig_Size;i++)
+	{
+		if(Signal[i] < Trig_SP)
+		{
+			ctr=i;
+			break;
+		}
+	}
+	
+	for(i=ctr;i<=Sig_Size;i++)
+	{
+		if(Signal[i] >= Trig_SP)
+		{
+			return i;
+		}
+	}
+	
 	return 0;
 }
 
@@ -135,87 +81,148 @@ uint16_t RisingEdge(uint16_t Treshold, uint16_t Jmp_Treshold, uint32_t* Signal, 
   */
 int main(void)
 {
-	static volatile uint16_t EdgeCTR=0;
-	short values_TEMP[480];
-  /* This project template calls firstly two functions in order to configure MPU feature 
-     and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable().
-     These functions are provided as template implementation that User may integrate 
-     in his application, to enhance the performance in case of use of AXI interface 
-     with several masters. */ 
-  
+	static volatile uint16_t i=0;
+	static uint16_t Triggered_Sample=0;
+	static uint8_t Trigger_Point=50;
+	static uint8_t PRESS_FLAG=0;
+	GUI_MEMDEV_Handle hMem0,hMem1;
+	GPIO_InitTypeDef GPIO_InitStruct;
+	TOUCH_STATE * 	pState;
+  ///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the MPU attributes as Write Through */
   MPU_Config();
-
   /* Enable the CPU Cache */
   CPU_CACHE_Enable();
-
-#ifdef RTE_CMSIS_RTOS                   // when using CMSIS RTOS
   osKernelInitialize();                 // initialize CMSIS-RTOS
-#endif
-
-  /* STM32F7xx HAL library initialization:
-       - Configure the Flash ART accelerator on ITCM interface
-       - Configure the Systick to generate an interrupt each 1 msec
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
-	BSP_SDRAM_Init();
-	GUI_Init();
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// Hardware initialize
+  if( HAL_Init() != HAL_OK)
+		Error_Handler();
 	
+	BSP_SDRAM_Init();
+	
+	Touch_Initialize();
+	
+	if( ConfigureDMA(&g_DmaHandle, &g_AdcHandle) != HAL_OK)
+		Error_Handler();
+	
+	if( ADC_INIT(&g_AdcHandle) != HAL_OK)
+		Error_Handler();
+	///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the System clock to have a frequency of 216 MHz */
   SystemClock_Config();
-
-
-  /* Add your application code here
-     */
-
-#ifdef RTE_CMSIS_RTOS                   // when using CMSIS RTOS
-  // create 'thread' functions that start executing,
-  // example: tid_name = osThreadCreate (osThread(name), NULL);
-
+	
   osKernelStart();                      // start thread execution 
-#endif
-
-  
+	Main_thID = osThreadGetId();
+	///////////////////////////////////////////////////////////////////////////////////////////
+	//General purpose In/Out initialize
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	GPIO_InitStruct.Pin = GPIO_PIN_14;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+	///////////////////////////////////////////////////////////////////////////////////////////
+	//GUI Initialize
+	GUI_Init();
+	osDelay(100);
 	GUI_Clear();
+	
+	GUI_SetColor(GUI_BLUE);
+	GUI_SetFont(&GUI_Font16_1);
+	GUI_DispStringHCenterAt("Oscyloskop cyfrowy v1.1" , 240, 150);
+	GUI_DispStringHCenterAt("Adrian Kurylak" , 240, 175);
+	GUI_DispStringHCenterAt("Politechnika Wroclawska" , 240, 200);
 	GUI_SetFont(&GUI_Font32_1);
-	GUI_SetBkColor(GUI_BLACK);
+	GUI_DispStringHCenterAt("Inicjalizacja" , 240, 120);
+	osDelay(250);
+	GUI_DispStringHCenterAt("Inicjalizacja." , 240, 120);
+	osDelay(500);
+	GUI_DispStringHCenterAt("Inicjalizacja.." , 240, 120);
+	osDelay(500);
+	GUI_DispStringHCenterAt("Inicjalizacja..." , 240, 120);
+	osDelay(750);
+	
+	GUI_SelectLayer(0);
+	hMem0 = GUI_MEMDEV_Create(0, 241, 480, 32);
+	GUI_MEMDEV_Select(hMem0);
+	GUI_MEMDEV_Clear(hMem0);
+	
+	GUI_SetBkColor(GUI_ORANGE);
+	GUI_SetFont(&GUI_Font32_1);
 	GUI_Clear();
 	GUI_SetPenSize(20);
 	GUI_SetColor(GUI_RED);
 	GUI_SetTextMode(GUI_TM_NORMAL);	
+	GUI_DispStringHCenterAt("Oscillo" , 240, 241);
+
+	GUI_SelectLayer(1);
+	hMem1 = GUI_MEMDEV_Create(0, 0, 480, 240);
+	GUI_MEMDEV_Select(hMem1);
+	GUI_MEMDEV_Clear(hMem1);
+
+	GUI_SetLayerAlphaEx(1,0x3f);
+	GUI_SetBkColor(GUI_WHITE);
+	GUI_SetFont(&GUI_Font32_1);
+	GUI_Clear();
+	GUI_SetPenSize(30);
+	GUI_SetColor(GUI_RED);
 	
-	(void)ConfigureDMA(&g_DmaHandle, &g_AdcHandle);
-	(void)ADC_INIT(&g_AdcHandle);
+	if(!GUI_CURSOR_GetState())
+	{
+		GUI_CURSOR_Select(&GUI_CursorCrossM);
+	}
+	GUI_CURSOR_Show();
 	
+	GUI_Clear();
+	
+	GUI_MEMDEV_CopyToLCD(hMem0);
+	GUI_MEMDEV_CopyToLCD(hMem1);
+	///////////////////////////////////////////////////////////////////////////////////////////
 	HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
-	
+	///////////////////////////////////////////////////////////////////////////////////////////
 	/* Infinite loop */
   while (1)
   {
-		GUI_Delay(40);
-		if(IRQ_FLAG)
+		osSignalWait(DMA_ConvCpltSig,1000);
+			for(i=0;i<ADC_BUFFER_LENGTH;i++)	// <- Temporary. Take the full advantage of DMA !
+			values_BUF[i]=255-values[i];
+		
+		GUI_Clear();
+		GUI_MEMDEV_Select(hMem1);
+		
+		Touch_GetState( pState );
+		if(	(pState->pressed) )
 		{
-			EdgeCTR = RisingEdge(15, 30, values, ADC_BUFFER_LENGTH); // Remember about ">>" inside Rising_Edge	
-
-			if(EdgeCTR > (ADC_BUFFER_LENGTH-481)) EdgeCTR=0;
-			
-			EdgeCTR=0;
-			
-			for(i=0;i<480;i++)
-			{
-				values_TEMP[i]=values[i];
-			}
-			
-			GUI_Clear();
-			GUI_DispStringHCenterAt("Interrupts" , 250, 200);
-			GUI_DrawGraph(/*(short*)*/&values_TEMP[EdgeCTR],480,0,0); // Useful: GUI_COUNTOF(values)
-			
-			IRQ_FLAG &= 0x00;
-			
-			//HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
+			if(	((pState->x >=0)&&(pState->x <= 20)&&(pState->y >=Trigger_Point-16)&&(pState->y <=Trigger_Point+16))  || PRESS_FLAG)
+				{
+						PRESS_FLAG=1;
+						Trigger_Point = pState->y;
+				}
 		}
+		else
+		{
+			PRESS_FLAG=0;
+		}
+			
+		GUI_CURSOR_SetPosition(pState->x,pState->y);
+			
+		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
+		if(Triggered_Sample >=16)Triggered_Sample -=16;
+		
+		GUI_SetColor(GUI_GREEN);
+		GUI_DrawHLine(Trigger_Point,0,480);
+		GUI_FillCircle(15,Trigger_Point,10);
+		GUI_SetColor(GUI_YELLOW);
+		GUI_DrawCircle(15,Trigger_Point,10);
+		GUI_SetColor(GUI_BLACK);
+		GUI_DrawGraph((short*)&values_BUF[Triggered_Sample],480,0,0); // Useful: GUI_COUNTOF(values)
+		GUI_MEMDEV_CopyToLCD(hMem1);
+		
+		//osSignalWait(DMA_ConvCpltSig,20000);
+		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
+		osSignalClear(Main_thID, DMA_ConvCpltSig);
   }
 }
 
@@ -366,13 +373,5 @@ void assert_failed(uint8_t* file, uint32_t line)
   }
 }
 #endif
-
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-  */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

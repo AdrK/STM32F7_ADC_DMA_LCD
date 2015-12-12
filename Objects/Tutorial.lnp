@@ -8,6 +8,7 @@
 ".\objects\buttons_746g_discovery.o"
 ".\objects\lcd_x.o"
 ".\objects\led_746g_discovery.o"
+".\objects\touch_746g_discovery.o"
 "C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib"
 ".\objects\rtx_conf_cm.o"
 ".\objects\stm32f7xx_hal.o"

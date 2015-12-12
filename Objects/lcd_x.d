@@ -7,8 +7,8 @@
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\Global.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include\GUI_Version.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h
-.\objects\lcd_x.o: C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_POLLING_LCD\RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h
-.\objects\lcd_x.o: C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_POLLING_LCD\RTE\RTE_Components.h
+.\objects\lcd_x.o: C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h
+.\objects\lcd_x.o: C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\RTE_Components.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_def.h
 .\objects\lcd_x.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h

@@ -44,14 +44,23 @@
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_hal_conf.h"         // Keil::Device:STM32Cube Framework:Classic
 #include "stm32746g_discovery_sdram.h"  // Keil.STM32F746G-Discovery::Board Support:Drivers:SDRAM
-
+#include "Board_Touch.h"                // ::Board Support:Touchscreen
 #include "Board_LED.h"                  // ::Board Support:LED
-#include "GUI.h"                        // Segger.MDK-Pro::Graphics:CORE
+#include "GUI.h"
+#ifdef _RTE_
+#include "RTE_Components.h"             // Component selection
+#endif
+#ifdef RTE_CMSIS_RTOS                   // when RTE component CMSIS RTOS is used
+#include "cmsis_os.h"                   // CMSIS RTOS header file
+#endif
+
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
-#define ADC_BUFFER_LENGTH 1024
+#define ADC_BUFFER_LENGTH 	1024
+#define DMA_ConvCpltSig 		0xF0F0
+#define DMA_ConvHalfCpltSig 0xF0F1
 /* Exported functions ------------------------------------------------------- */
 
 #endif /* __MAIN_H */
