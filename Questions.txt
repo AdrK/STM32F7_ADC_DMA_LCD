@@ -1,0 +1,10 @@
+1. HOW TO: Data integrity
+2. HOW TO: Take the full advantage of DMA !
+3. Debuging
+	code profiler
+	system debug
+4. Assert
+4a. How to find memory leak or memory lack ??
+5. DSP ??	
+6. aquire to sRAM, or copy to sRAM
+7. Adress alignment in DMA

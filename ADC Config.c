@@ -79,7 +79,7 @@ HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* 
     DmaHandle->Init.MemInc = DMA_MINC_ENABLE;
     DmaHandle->Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
     DmaHandle->Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    DmaHandle->Init.Mode = DMA_CIRCULAR;
+    DmaHandle->Init.Mode = DMA_NORMAL;
     DmaHandle->Init.Priority = DMA_PRIORITY_HIGH;
     DmaHandle->Init.FIFOMode = DMA_FIFOMODE_DISABLE;         
     DmaHandle->Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
@@ -109,9 +109,11 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* AdcHandle)
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
 {	
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9);
 	HAL_ADC_Stop_DMA(&g_AdcHandle);
 	osSignalSet(Main_thID,DMA_ConvCpltSig);
-	//HAL_GPIO_TogglePin (GPIOB, GPIO_PIN_14);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9);
+	//GPIOB->ODR ^= GPIO_PIN_9; // this is just for test of DMA speed
 }
 
  void DMA2_Stream0_IRQHandler()

@@ -1,5 +1,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "analyzer.h"
 
 extern uint32_t os_time;
 uint32_t HAL_GetTick(void) { 
@@ -7,72 +8,32 @@ uint32_t HAL_GetTick(void) {
 }
 
 /* Private typedef -----------------------------------------------------------*/
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef  g_AdcHandle;
 DMA_HandleTypeDef  g_DmaHandle;
-uint32_t values[ADC_BUFFER_LENGTH] __attribute__((at(0xC0400000)));
-volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
 osThreadId Main_thID;
+static uint8_t Trigger_Point=255-50;
+// Main aquisition memory block
+uint32_t values[ADC_BUFFER_LENGTH] __attribute__((at(0xC0400000)));
+// Sample buffer
+volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void MPU_Config(void);
 static void CPU_CACHE_Enable(void);
-static uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq);
+static void Hello_MSG(void);
+Touch_struct* Touch_Callback( Touch_struct* l_Touched);
+extern int Init_TH_Touch (void);
+extern void Draw_GraphGrid(uint16_t XSize, uint16_t YSize, uint8_t XDense, uint8_t YDense);
+extern uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq);
 extern HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle);
 extern HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTypeDef* AdcHandle);
 
 /* Private functions ---------------------------------------------------------*/
-
-/*	Questions
-		1. HOW TO: Data integrity
-		2. HOW TO: Take the full advantage of DMA !
-		3. Debuging
-			code profiler
-			system debug
-		4. Assert
-		4a. How to find memory leak or memory lack ??
-		5. DSP ??	
-		6. aquire to sRAM, or copy to sRAM
-		7. Adress alignment in DMA
-*/
-
-uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq) {
-
-	uint16_t i=0;
-	uint16_t ctr=0;
-	Sig_Size -=500;
-	
-	for(i=0;i<=Sig_Size;i++)
-	{
-		if(Signal[i] >= Trig_SP)
-		{
-			ctr=i;
-			break;
-		}
-	}
-	
-	for(i=ctr;i<=Sig_Size;i++)
-	{
-		if(Signal[i] < Trig_SP)
-		{
-			ctr=i;
-			break;
-		}
-	}
-	
-	for(i=ctr;i<=Sig_Size;i++)
-	{
-		if(Signal[i] >= Trig_SP)
-		{
-			return i;
-		}
-	}
-	
-	return 0;
-}
 
 /**
   * @brief  Main program
@@ -82,12 +43,11 @@ uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_
 int main(void)
 {
 	static volatile uint16_t i=0;
-	static uint16_t Triggered_Sample=0;
-	static uint8_t Trigger_Point=50;
-	static uint8_t PRESS_FLAG=0;
-	GUI_MEMDEV_Handle hMem0,hMem1;
-	GPIO_InitTypeDef GPIO_InitStruct;
-	TOUCH_STATE * 	pState;
+	static uint16_t Triggered_Sample=0;	
+	osEvent evt;
+	GUI_MEMDEV_Handle hMem0;
+	//TOUCH_STATE * 	pState;
+	Touch_struct Touched;
   ///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the MPU attributes as Write Through */
   MPU_Config();
@@ -98,37 +58,98 @@ int main(void)
 	// Hardware initialize
   if( HAL_Init() != HAL_OK)
 		Error_Handler();
-	
 	BSP_SDRAM_Init();
-	
 	Touch_Initialize();
-	
 	if( ConfigureDMA(&g_DmaHandle, &g_AdcHandle) != HAL_OK)
 		Error_Handler();
-	
 	if( ADC_INIT(&g_AdcHandle) != HAL_OK)
 		Error_Handler();
 	///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the System clock to have a frequency of 216 MHz */
   SystemClock_Config();
-	
+	// Thread initialization
+	Init_TH_Touch ();
+	// RTOS Start Kernel
   osKernelStart();                      // start thread execution 
+	// Get Main Thread ID
 	Main_thID = osThreadGetId();
-	///////////////////////////////////////////////////////////////////////////////////////////
-	//General purpose In/Out initialize
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	GPIO_InitStruct.Pin = GPIO_PIN_14;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
 	///////////////////////////////////////////////////////////////////////////////////////////
 	//GUI Initialize
 	GUI_Init();
 	osDelay(100);
 	GUI_Clear();
+	// Welcome user
+	Hello_MSG();
 	
+	GUI_SelectLayer(0);
+	hMem0 = GUI_MEMDEV_Create(0,0,480,272);
+	
+	if(!GUI_CURSOR_GetState())
+		GUI_CURSOR_Select(&GUI_CursorCrossM);
+	
+	GUI_CURSOR_Show();
+	
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// Start data acquire
+	HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
+	///////////////////////////////////////////////////////////////////////////////////////////
+	
+	/* Infinite loop */
+  while (1)
+  {
+Anal_CH1_Set(/*Main loop start*/);
+Anal_CH2_Set(/*Wait start*/);
+		evt = osSignalWait(DMA_ConvCpltSig,2);
+		if( evt.status == osEventTimeout)
+				Error_Handler();
+Anal_CH2_Reset(/*Wait finish*/);
+		
+		
+Anal_CH3_Set(/*Copy start*/);
+		for(i=0;i<ADC_BUFFER_LENGTH;i++)	// <- Temporary. Take the full advantage of DMA !
+		values_BUF[i]=255-values[i];
+Anal_CH3_Reset(/*Copy finish*/);
+		
+		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
+		osSignalClear(Main_thID, DMA_ConvCpltSig);
+			
+		GUI_CURSOR_SetPosition(Touched.pState->x,Touched.pState->y);
+			
+		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
+		//if(Triggered_Sample >=20)Triggered_Sample -=20; // Offset to see the edge in the center <- bullshit ?
+		
+		GUI_MEMDEV_Select(hMem0);
+		GUI_MEMDEV_Clear(hMem0);
+		
+		GUI_SetColor(GUI_ORANGE);
+		GUI_FillRect(0,0,480,272);
+		
+		GUI_SetColor(GUI_BLACK);
+		GUI_DrawRect(34,5,474,266);		
+		
+		GUI_SetColor(GUI_WHITE);
+		GUI_FillRect(35,6,475,266);
+		
+		Draw_GraphGrid(440,260,40,40);
+		
+		GUI_SetColor(GUI_BLUE);
+		/*Draw garph start*/HAL_GPIO_TogglePin(GPIOI,GPIO_PIN_1);
+		GUI_DrawGraph((short*)&values_BUF[Triggered_Sample],440,35,6); // Useful: GUI_COUNTOF(values)
+		/*Draw garph finish*/HAL_GPIO_TogglePin(GPIOI,GPIO_PIN_1);
+		
+		GUI_SetColor(GUI_GREEN);
+		GUI_DrawHLine(Trigger_Point,0,480);
+		GUI_FillCircle(15,Trigger_Point,10);
+		
+		GUI_SetColor(GUI_YELLOW);
+		GUI_DrawCircle(15,Trigger_Point,10);
+		
+		GUI_MEMDEV_CopyToLCD(hMem0);
+Anal_CH1_Reset(/*Main loop finish*/);
+  }
+}
+
+void Hello_MSG() {
 	GUI_SetColor(GUI_BLUE);
 	GUI_SetFont(&GUI_Font16_1);
 	GUI_DispStringHCenterAt("Oscyloskop cyfrowy v1.1" , 240, 150);
@@ -143,89 +164,7 @@ int main(void)
 	osDelay(500);
 	GUI_DispStringHCenterAt("Inicjalizacja..." , 240, 120);
 	osDelay(750);
-	
-	GUI_SelectLayer(0);
-	hMem0 = GUI_MEMDEV_Create(0, 241, 480, 32);
-	GUI_MEMDEV_Select(hMem0);
-	GUI_MEMDEV_Clear(hMem0);
-	
-	GUI_SetBkColor(GUI_ORANGE);
-	GUI_SetFont(&GUI_Font32_1);
-	GUI_Clear();
-	GUI_SetPenSize(20);
-	GUI_SetColor(GUI_RED);
-	GUI_SetTextMode(GUI_TM_NORMAL);	
-	GUI_DispStringHCenterAt("Oscillo" , 240, 241);
-
-	GUI_SelectLayer(1);
-	hMem1 = GUI_MEMDEV_Create(0, 0, 480, 240);
-	GUI_MEMDEV_Select(hMem1);
-	GUI_MEMDEV_Clear(hMem1);
-
-	GUI_SetLayerAlphaEx(1,0x3f);
-	GUI_SetBkColor(GUI_WHITE);
-	GUI_SetFont(&GUI_Font32_1);
-	GUI_Clear();
-	GUI_SetPenSize(30);
-	GUI_SetColor(GUI_RED);
-	
-	if(!GUI_CURSOR_GetState())
-	{
-		GUI_CURSOR_Select(&GUI_CursorCrossM);
-	}
-	GUI_CURSOR_Show();
-	
-	GUI_Clear();
-	
-	GUI_MEMDEV_CopyToLCD(hMem0);
-	GUI_MEMDEV_CopyToLCD(hMem1);
-	///////////////////////////////////////////////////////////////////////////////////////////
-	HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
-	///////////////////////////////////////////////////////////////////////////////////////////
-	/* Infinite loop */
-  while (1)
-  {
-		osSignalWait(DMA_ConvCpltSig,1000);
-			for(i=0;i<ADC_BUFFER_LENGTH;i++)	// <- Temporary. Take the full advantage of DMA !
-			values_BUF[i]=255-values[i];
-		
-		GUI_Clear();
-		GUI_MEMDEV_Select(hMem1);
-		
-		Touch_GetState( pState );
-		if(	(pState->pressed) )
-		{
-			if(	((pState->x >=0)&&(pState->x <= 20)&&(pState->y >=Trigger_Point-16)&&(pState->y <=Trigger_Point+16))  || PRESS_FLAG)
-				{
-						PRESS_FLAG=1;
-						Trigger_Point = pState->y;
-				}
-		}
-		else
-		{
-			PRESS_FLAG=0;
-		}
-			
-		GUI_CURSOR_SetPosition(pState->x,pState->y);
-			
-		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
-		if(Triggered_Sample >=16)Triggered_Sample -=16;
-		
-		GUI_SetColor(GUI_GREEN);
-		GUI_DrawHLine(Trigger_Point,0,480);
-		GUI_FillCircle(15,Trigger_Point,10);
-		GUI_SetColor(GUI_YELLOW);
-		GUI_DrawCircle(15,Trigger_Point,10);
-		GUI_SetColor(GUI_BLACK);
-		GUI_DrawGraph((short*)&values_BUF[Triggered_Sample],480,0,0); // Useful: GUI_COUNTOF(values)
-		GUI_MEMDEV_CopyToLCD(hMem1);
-		
-		//osSignalWait(DMA_ConvCpltSig,20000);
-		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
-		osSignalClear(Main_thID, DMA_ConvCpltSig);
-  }
 }
-
 /**
   * @brief  System Clock Configuration
   *         The system Clock is configured as follow : 

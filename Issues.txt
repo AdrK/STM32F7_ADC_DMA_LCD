@@ -1,0 +1,7 @@
+
+Analyzer configuration:
+CH1 -> GPIOB  PIN_15  D11  Main loop time
+CH2 -> GPIOB  PIN_14  D12  GPIOB PIN_9 D14  Wait period
+CH3 -> GPIOI  PIN_1   D13  Copying time
+CH4 -> GPIOB  PIN_9   D14  
+CH5 -> GPIOB  PIN_8   D15  

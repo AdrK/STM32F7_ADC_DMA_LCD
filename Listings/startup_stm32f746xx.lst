@@ -954,20 +954,20 @@ ARM Macro Assembler    Page 15
               00000800 
               00000800 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.sp --fpu=F
-Pv4-SP --apcs=interwork --depend=.\objects\startup_stm32f746xx.d -o.\objects\st
-artup_stm32f746xx.o -IC:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746
-_Discovery\STM32F7_ADC_DMA_LCD\RTE -IC:\Users\adria\Documents\Workspace\Keil_uV
-ision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx -IC:\Kei
-l_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4
-.0\CMSIS\RTOS\RTX\INC -IC:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\Boar
-d -IC:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0-beta\emWin\Include -IC:\Keil_
-v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\BSP\STM32746G-Discovery -IC:\Keil_
-v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include 
--IC:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.2.0\Drivers\STM32F7xx_HAL_Driver\Inc
- --predefine="__RTX SETA 1" --predefine="__UVISION_VERSION SETA 516" --predefin
-e="_RTE_ SETA 1" --predefine="STM32F746xx SETA 1" --list=.\listings\startup_stm
-32f746xx.lst RTE\Device\STM32F746NGHx\startup_stm32f746xx.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.sp --apcs=
+interwork --depend=.\objects\startup_stm32f746xx.d -o.\objects\startup_stm32f74
+6xx.o -IC:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM
+32F7_ADC_DMA_LCD\RTE -IC:\Users\adria\Documents\Workspace\Keil_uVision\STM32F74
+6_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx -IC:\Keil_v5\ARM\PACK\
+ARM\CMSIS\4.5.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\
+RTX\INC -IC:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board -IC:\Keil_v5\ARM\
+PACK\Keil\MDK-Middleware\7.0.0\emWin\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F7
+xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery -IC:\Keil_v5\ARM\PACK\Keil\STM32F7
+xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include -IC:\Keil_v5\ARM\PACK\Ke
+il\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc --predefine="__RTX SETA
+ 1" --predefine="__UVISION_VERSION SETA 517" --predefine="_RTE_ SETA 1" --prede
+fine="STM32F746xx SETA 1" --list=.\listings\startup_stm32f746xx.lst RTE\Device\
+STM32F746NGHx\startup_stm32f746xx.s
 
 
 
