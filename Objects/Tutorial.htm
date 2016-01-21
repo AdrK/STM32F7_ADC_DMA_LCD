@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Tutorial.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Tutorial.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Thu Jan 21 02:02:17 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Thu Jan 21 02:15:30 2016
 <BR><P>
 <H3>Maximum Stack Usage =        448 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3958,7 +3958,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> th_gui.o(.constdata)
 </UL>
 <P><STRONG><a name="[c6]"></a>TH_Touch</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, th_touch.o(i.TH_Touch))
-<BR><BR>[Stack]<UL><LI>Max Depth = 416<LI>Call Chain = TH_Touch &rArr; Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
+<BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = TH_Touch &rArr; Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
@@ -4004,8 +4004,8 @@ Global Symbols
 <LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_TS_DisableIT
 </UL>
 
-<P><STRONG><a name="[2bb]"></a>Touch_Callback</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, th_touch.o(i.Touch_Callback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 400<LI>Call Chain = Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
+<P><STRONG><a name="[2bb]"></a>Touch_Callback</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, th_touch.o(i.Touch_Callback))
+<BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_GetState
 </UL>

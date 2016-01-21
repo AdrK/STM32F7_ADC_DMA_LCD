@@ -40,7 +40,8 @@ typedef struct {
 	};
 } Touch_struct;
 /* Exported constants --------------------------------------------------------*/
-#define ID_TRIGGER 0x01
+#define ID_NULL			0x00
+#define ID_TRIGGER	0x01
 /* Exported macro ------------------------------------------------------------*/
 #define ADC_BUFFER_LENGTH 	1024
 #define DMA_ConvCpltSig 			0xF0F0

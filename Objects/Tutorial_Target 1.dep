@@ -1,6 +1,6 @@
 Dependencies for Project 'Tutorial', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x56A029E4)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (main.h)(0x56A02D1F)
+F (.\main.c)(0x56A02FC8)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -52,7 +52,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\Issues.txt)(0x56A01461)()
 F (.\Questions.txt)(0x56A007E6)()
 F (.\ADC Config.c)(0x56A02953)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o ".\objects\adc config.o" --omf_browse ".\objects\adc config.crf" --depend ".\objects\adc config.d")
-I (main.h)(0x56A02D1F)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -102,7 +102,7 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include\GUI_Version.h)(0x
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h)(0x56279C3E)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\Graphics.c)(0x56A029AE)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\graphics.o --omf_browse .\objects\graphics.crf --depend .\objects\graphics.d)
-I (main.h)(0x56A02D1F)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -152,7 +152,7 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include\GUI_Version.h)(0x
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h)(0x56279C3E)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\Trigger.c)(0x56A00736)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\trigger.o --omf_browse .\objects\trigger.crf --depend .\objects\trigger.d)
-I (main.h)(0x56A02D1F)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -203,7 +203,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h)(0x56279C3E
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\Analyzer.c)(0x56A02D77)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\analyzer.o --omf_browse .\objects\analyzer.crf --depend .\objects\analyzer.d)
 I (analyzer.h)(0x56A0185A)
-I (main.h)(0x56A02D1F)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -253,8 +253,8 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include\GUI_Version.h)(0x
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h)(0x56279C3E)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\Analyzer.h)(0x56A0185A)()
-F (.\TH_Touch.c)(0x56A02DC6)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\th_touch.o --omf_browse .\objects\th_touch.crf --depend .\objects\th_touch.d)
-I (main.h)(0x56A02D1F)
+F (.\TH_Touch.c)(0x56A03103)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\th_touch.o --omf_browse .\objects\th_touch.crf --depend .\objects\th_touch.d)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)
@@ -304,7 +304,7 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include\GUI_Version.h)(0x
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h)(0x56279C3E)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x55DB7FDE)
 F (.\TH_GUI.c)(0x56A02E13)(-c --cpu Cortex-M7.fp.sp -D__RTX -g -O0 --apcs=interwork --split_sections-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE-I C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\RTE\Device\STM32F746NGHx-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\Board-I C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\BSP\STM32746G-Discovery-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\STM32F7xx_HAL_Driver\Inc-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F746xx -DUSE_FULL_ASSERT="1"-o .\objects\th_gui.o --omf_browse .\objects\th_gui.crf --depend .\objects\th_gui.d)
-I (main.h)(0x56A02D1F)
+I (main.h)(0x56A02F8B)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h)(0x558D4FC8)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm7.h)(0x56260B6C)

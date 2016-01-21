@@ -41,21 +41,28 @@ void TH_Touch (void const *argument) {
 
 Touch_struct* Touch_Callback( Touch_struct* l_Touched)
 {
-	uint8_t PRESS_FLAG=0;
+	static uint8_t PRESS_FLAG=0; // This must be static
 	TOUCH_STATE* l_pState;
 	Touch_GetState( l_pState );
 	
 	l_Touched->pState->pressed = l_pState->pressed;
 	l_Touched->pState->x = l_pState->x;
 	l_Touched->pState->y = l_pState->y;
-	/*
+
 	if(	l_pState->pressed )
-		PRESS_FLAG=1;
+	{
+		if(	((l_pState->x >=0)&&(l_pState->x <= 20) && (l_pState->y >=Trigger_Point-16) && (l_pState->y <=Trigger_Point+16)) || PRESS_FLAG ) // If trigger tapped pressed or hold
+		{
+			PRESS_FLAG = 1;
+			l_Touched->ID = ID_TRIGGER;
+		}
+		else
+			l_Touched->ID = ID_NULL;
+	}
 	else
-		PRESS_FLAG=0;
-	*/
-	if(	((l_pState->x >=0)&&(l_pState->x <= 20) && (l_pState->y >=Trigger_Point-16) && (l_pState->y <=Trigger_Point+16)))// || PRESS_FLAG )
-					l_Touched->ID = ID_TRIGGER;
+	{
+		PRESS_FLAG = 0;
+	}
 	
 	switch( l_Touched->ID )
 	{

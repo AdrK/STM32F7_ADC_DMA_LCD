@@ -40,13 +40,7 @@ extern HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTy
   * @retval None
   */
 int main(void)
-{
-	static volatile uint16_t i=0;
-	static uint16_t Triggered_Sample=0;	
-	osEvent evt;
-	
-	//TOUCH_STATE * 	pState;
-	Touch_struct Touched;
+{	
   ///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the MPU attributes as Write Through */
   MPU_Config();
@@ -80,10 +74,7 @@ int main(void)
 	///////////////////////////////////////////////////////////////////////////////////////////
 	osThreadTerminate(Main_thID);
 	/* Infinite loop */
-  while (1)
-  {
-
-  }
+  while (1) {  }
 }
 /**
   * @brief  System Clock Configuration
