@@ -7,6 +7,7 @@ extern volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
 uint16_t ctr;
 extern uint8_t IRQ_FLAG;
 extern osThreadId Main_thID;
+extern osThreadId tid_TH_GUI;
 
 HAL_StatusTypeDef ADC_INIT(ADC_HandleTypeDef* AdcHandle)
 {
@@ -104,14 +105,14 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* AdcHandle)
 {	
 	//HAL_ADC_Stop_DMA(&g_AdcHandle);
 	
-	//osSignalSet(Main_thID,DMA_ConvHalfCpltSig);
+	//osSignalSet(tid_TH_GUI,DMA_ConvHalfCpltSig);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
 {	
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9);
 	HAL_ADC_Stop_DMA(&g_AdcHandle);
-	osSignalSet(Main_thID,DMA_ConvCpltSig);
+	osSignalSet(tid_TH_GUI,DMA_ConvCpltSig);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9);
 	//GPIOB->ODR ^= GPIO_PIN_9; // this is just for test of DMA speed
 }

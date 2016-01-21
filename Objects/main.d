@@ -48,4 +48,3 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\emWin\Include\GUI_Version.h
 .\objects\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\main.o: analyzer.h

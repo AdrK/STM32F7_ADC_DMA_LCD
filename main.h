@@ -43,8 +43,10 @@ typedef struct {
 #define ID_TRIGGER 0x01
 /* Exported macro ------------------------------------------------------------*/
 #define ADC_BUFFER_LENGTH 	1024
-#define DMA_ConvCpltSig 		0xF0F0
-#define DMA_ConvHalfCpltSig 0xF0F1
+#define DMA_ConvCpltSig 			0xF0F0
+#define DMA_ConvHalfCpltSig 	0xF0F1
+#define GUI_TouchStateReqSig 	0xA0A0
+#define GUI_TouchGetSig				0xA0A1
 #define debug_mode
 /* Exported functions ------------------------------------------------------- */
 
