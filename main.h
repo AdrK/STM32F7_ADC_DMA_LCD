@@ -39,11 +39,12 @@ typedef struct {
 		uint8_t MSG;
 	};
 } Touch_struct;
-/* Exported constants --------------------------------------------------------*/
+/* Exported controls IDs -----------------------------------------------------*/
 #define ID_NULL			0x00
 #define ID_TRIGGER	0x01
-/* Exported macro ------------------------------------------------------------*/
-#define ADC_BUFFER_LENGTH 	1024
+/* Exported macros -----------------------------------------------------------*/
+#define ADC_BUFFER_LENGTH 		1024
+#define DEFAULT_TRIGGER_POINT	255-50
 #define DMA_ConvCpltSig 			0xF0F0
 #define DMA_ConvHalfCpltSig 	0xF0F1
 #define GUI_TouchStateReqSig 	0xA0A0

@@ -421,6 +421,26 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+            <File>
+              <FileName>Issues.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Issues.txt</FilePath>
+            </File>
+            <File>
+              <FileName>Questions.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Questions.txt</FilePath>
+            </File>
+            <File>
+              <FileName>Mutex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Mutex.c</FilePath>
+            </File>
+            <File>
+              <FileName>Semaphore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Semaphore.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -435,9 +455,53 @@
         </Group>
         <Group>
           <GroupName>GUI</GroupName>
+          <Files>
+            <File>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Graphics.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>Calculations</GroupName>
+          <Files>
+            <File>
+              <FileName>Trigger.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Trigger.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Debug</GroupName>
+          <Files>
+            <File>
+              <FileName>Analyzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Analyzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Analyzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Analyzer.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>RTOS</GroupName>
+          <Files>
+            <File>
+              <FileName>TH_Touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TH_Touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>TH_GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TH_GUI.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::Board Support</GroupName>

@@ -14,7 +14,7 @@ uint32_t HAL_GetTick(void) {
 ADC_HandleTypeDef  g_AdcHandle;
 DMA_HandleTypeDef  g_DmaHandle;
 osThreadId Main_thID;
-uint8_t Trigger_Point=255-50;
+uint8_t Trigger_Point=DEFAULT_TRIGGER_POINT;
 // Main aquisition memory block
 uint32_t values[ADC_BUFFER_LENGTH] __attribute__((at(0xC0400000)));
 // Sample buffer
@@ -35,7 +35,7 @@ extern HAL_StatusTypeDef ConfigureDMA(DMA_HandleTypeDef* DmaHandle, ADC_HandleTy
 /* Private functions ---------------------------------------------------------*/
 
 /**
-  * @brief  Main program
+  * @brief  Main function. Executes all initialization and terminate its thread.
   * @param  None
   * @retval None
   */
@@ -46,32 +46,34 @@ int main(void)
   MPU_Config();
   /* Enable the CPU Cache */
   CPU_CACHE_Enable();
-  osKernelInitialize();                 // initialize CMSIS-RTOS
+	// initialize CMSIS-RTOS
+  osKernelInitialize();
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Hardware initialize
   if( HAL_Init() != HAL_OK)
 		Error_Handler();
-	BSP_SDRAM_Init();
-	Touch_Initialize();
 	if( ConfigureDMA(&g_DmaHandle, &g_AdcHandle) != HAL_OK)
 		Error_Handler();
 	if( ADC_INIT(&g_AdcHandle) != HAL_OK)
 		Error_Handler();
+	
+	BSP_SDRAM_Init();
+	Touch_Initialize();
 	///////////////////////////////////////////////////////////////////////////////////////////
   /* Configure the System clock to have a frequency of 216 MHz */
   SystemClock_Config();
 	// Thread initialization
-	Init_TH_GUI ();
-	Init_TH_Touch ();
+	Init_TH_GUI();
+	Init_TH_Touch();
 	// RTOS Start Kernel
   osKernelStart();                      // start thread execution 
 	// Get Main Thread ID
 	Main_thID = osThreadGetId();
-	
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Start data acquire
 	HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
 	///////////////////////////////////////////////////////////////////////////////////////////
+	// Terminate main thread
 	osThreadTerminate(Main_thID);
 	/* Infinite loop */
   while (1) {  }
@@ -138,17 +140,17 @@ void Error_Handler(void){
   while(1)
   {
 		LED_On(0);
-		osDelay(100);
-		LED_Off(0);
-		osDelay(100);
+			osDelay(100);
+			LED_Off(0);
+			osDelay(100);
 		LED_On(0);
-		osDelay(100);
-		LED_Off(0);
-		osDelay(100);
+			osDelay(100);
+			LED_Off(0);
+			osDelay(100);
 		LED_On(0);
-		osDelay(100);
-		LED_Off(0);
-		osDelay(500);
+			osDelay(100);
+			LED_Off(0);
+			osDelay(500);
   }
 }
 

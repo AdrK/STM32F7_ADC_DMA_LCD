@@ -49,13 +49,13 @@ void TH_GUI (void const *argument) {
 	
 	GUI_CURSOR_Show();
   while (1) {
-    Anal_CH1_Set(/*Main loop start*/);
+																															Anal_CH1_Set(/*Main loop start*/);
 																															Anal_CH2_Set(/*Wait start*/);
 		evt = osSignalWait(DMA_ConvCpltSig,(uint32_t)2);
 		if( evt.status == osEventTimeout)
 				Error_Handler();
 																															Anal_CH2_Reset(/*Wait finish*/);
-		osSignalSet(tid_Touch,GUI_TouchStateReqSig);
+		//osSignalSet(tid_Touch,GUI_TouchStateReqSig);
 		
 																															Anal_CH3_Set(/*Copy start*/);
 		for(i=0;i<ADC_BUFFER_LENGTH;i++)	// <- Temporary. Take the full advantage of DMA !
@@ -64,9 +64,10 @@ void TH_GUI (void const *argument) {
 		
 		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
 		osSignalClear(tid_TH_GUI, DMA_ConvCpltSig);
-		
+																															Anal_CH4_Set(/*Wait start*/);		
 		osSignalWait(GUI_TouchGetSig,(uint32_t)0);
 		GUI_CURSOR_SetPosition(g_Touched.pState->x,g_Touched.pState->y);
+																															Anal_CH4_Reset(/*Wait finish*/);
 		
 		Trigger_Point = g_Touched.MSG;
 		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
@@ -75,7 +76,7 @@ void TH_GUI (void const *argument) {
 		GUI_MEMDEV_Select(hMem0);
 		GUI_MEMDEV_Clear(hMem0);
 		
-		GUI_SetColor(GUI_ORANGE);
+		GUI_SetColor(GUI_DARKGRAY);
 		GUI_FillRect(0,0,480,272);
 		
 		GUI_SetColor(GUI_BLACK);
@@ -91,7 +92,7 @@ void TH_GUI (void const *argument) {
 		GUI_DrawGraph((short*)&values_BUF[Triggered_Sample],440,35,6); // Useful: GUI_COUNTOF(values)
 		/*Draw garph finish*/HAL_GPIO_TogglePin(GPIOI,GPIO_PIN_1);
 		
-		GUI_SetColor(GUI_GREEN);
+		GUI_SetColor(GUI_ORANGE);
 		GUI_DrawHLine(Trigger_Point,0,480);
 		GUI_FillCircle(15,Trigger_Point,10);
 		

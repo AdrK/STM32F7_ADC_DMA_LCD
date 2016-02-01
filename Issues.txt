@@ -1,7 +1,26 @@
+Analyzer configuration----------------------------------------------|
+--------------------------------------------------------------------|
+CH1 RED		->	GPIOB  PIN_15  D11  Main loop time					|
+--------------------------------------------------------------------|
+CH2 GREEN	->	GPIOB  PIN_14  D12  GPIOB PIN_9 D14  Wait period	|
+--------------------------------------------------------------------|
+CH3 BLUE	-> 	GPIOI  PIN_1   D13  Copying time					|
+--------------------------------------------------------------------|
+CH4 YELLOW	->	GPIOB  PIN_9   D14  Touch wait time					|
+--------------------------------------------------------------------|
+CH5 ORANGE	->	GPIOB  PIN_8   D15  								|
+--------------------------------------------------------------------|
+--------------------------------------------------------------------|
 
-Analyzer configuration:
-CH1 -> GPIOB  PIN_15  D11  Main loop time
-CH2 -> GPIOB  PIN_14  D12  GPIOB PIN_9 D14  Wait period
-CH3 -> GPIOI  PIN_1   D13  Copying time
-CH4 -> GPIOB  PIN_9   D14  
-CH5 -> GPIOB  PIN_8   D15  
+///////////////
+# Change Analyzer chanells to match those on board
+# Code simple benchmark to:
+	- Check integer computional time
+	- Check float computional time
+	- Check GUI performance
+	- Compare RTOS performance against non RTOS program
+# Touch should use mutex/semaphore instead osSignalWait:
+	- Touch is sampling screen at constant rate
+	- If position of cursor had changed, set mutex and update value in Touch_struct
+	- If no change in position, do not bother, continue
+# Use just horizontal lines -> it's faster.

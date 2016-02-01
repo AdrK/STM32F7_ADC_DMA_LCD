@@ -32,7 +32,7 @@ int Init_TH_Touch (void) {
 void TH_Touch (void const *argument) {
 	static Touch_struct* Pg_Touched = &g_Touched;
   while (1) {
-    osSignalWait(GUI_TouchStateReqSig,(uint32_t)0);
+		osDelay(10);
 		Touch_Callback(Pg_Touched);
 		osSignalSet(tid_TH_GUI,GUI_TouchGetSig);
     osThreadYield ();                                           // suspend thread
@@ -51,7 +51,7 @@ Touch_struct* Touch_Callback( Touch_struct* l_Touched)
 
 	if(	l_pState->pressed )
 	{
-		if(	((l_pState->x >=0)&&(l_pState->x <= 20) && (l_pState->y >=Trigger_Point-16) && (l_pState->y <=Trigger_Point+16)) || PRESS_FLAG ) // If trigger tapped pressed or hold
+		if(	((l_pState->x >=0)&&(l_pState->x <= 20) && (l_pState->y >=Trigger_Point-16) && (l_pState->y <=Trigger_Point+16)) || PRESS_FLAG ) // If trigger tapped, pressed or held
 		{
 			PRESS_FLAG = 1;
 			l_Touched->ID = ID_TRIGGER;
@@ -66,7 +66,7 @@ Touch_struct* Touch_Callback( Touch_struct* l_Touched)
 	
 	switch( l_Touched->ID )
 	{
-		case ID_TRIGGER:
+		case ID_TRIGGER: // in this case in MSG we have level of triggering
 		{
 			l_Touched->MSG = l_pState->y;
 			
