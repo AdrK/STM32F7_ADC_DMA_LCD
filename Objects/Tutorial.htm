@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\Tutorial.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Tutorial.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Thu Jan 21 22:19:02 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Wed Feb 03 00:52:23 2016
 <BR><P>
-<H3>Maximum Stack Usage =        448 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        440 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 TH_GUI &rArr; GUI_CURSOR_SetPosition &rArr; GUI_CURSOR_SetPositionEx &rArr; GUI_SPRITE_SetPosition &rArr; _SetPosition &rArr; _CreateBuffer &rArr; GUI_ALLOC_GetMaxSize &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr; _Alloc &rArr;  _InitOnce (Cycle)
 <P>
@@ -1042,7 +1042,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_TS_GetTouchInfo
 <LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_TS_Get_GestureId
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_GetState
+<BR>[Called By]<UL><LI><a href="#[2bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_GetState
 </UL>
 
 <P><STRONG><a name="[174]"></a>BSP_TS_Get_GestureId</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, stm32746g_discovery_ts.o(i.BSP_TS_Get_GestureId))
@@ -1097,6 +1097,7 @@ Global Symbols
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Off
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_GUI
+<LI><a href="#[280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_TH_Touch
 <LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
 <LI><a href="#[2b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
@@ -1408,7 +1409,6 @@ Global Symbols
 <LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_GetBitsPerPixel
 <LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_Delete
 <LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_CopyToLCDAt
-<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawVLine
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawBitmap
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_XorPixel
@@ -1449,6 +1449,7 @@ Global Symbols
 <LI><a href="#[304]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_XY2PTR
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_SetPixelIndex
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GetRect
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 </UL>
 
 <P><STRONG><a name="[1b5]"></a>GUI_ALLOC_RequestSize</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, gui_alloc.o(i.GUI_ALLOC_RequestSize))
@@ -1476,7 +1477,6 @@ Global Symbols
 <LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_GetBitsPerPixel
 <LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_Delete
 <LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_CopyToLCDAt
-<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawVLine
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawBitmap
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_XorPixel
@@ -1517,6 +1517,7 @@ Global Symbols
 <LI><a href="#[304]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_XY2PTR
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_SetPixelIndex
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GetRect
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 </UL>
 
 <P><STRONG><a name="[1b4]"></a>GUI_ALLOC_h2p</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, gui_alloc.o(i.GUI_ALLOC_h2p))
@@ -2503,8 +2504,8 @@ Global Symbols
 <P><STRONG><a name="[303]"></a>GUI_USAGE_AddRect</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, guidev_usage.o(i.GUI_USAGE_AddRect))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GUI_USAGE_AddRect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawBitmap
+<BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawBitmap
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 </UL>
 
 <P><STRONG><a name="[20f]"></a>GUI_USAGE_BM_Create</STRONG> (Thumb, 88 bytes, Stack size 32 bytes, guidev_usagebm.o(i.GUI_USAGE_BM_Create))
@@ -2981,7 +2982,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Delay
+<BR>[Called By]<UL><LI><a href="#[2bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Delay
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_SDRAM_Initialization_sequence
 </UL>
 
@@ -3397,10 +3398,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[280]"></a>Init_TH_Touch</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, th_touch.o(i.Init_TH_Touch))
+<P><STRONG><a name="[280]"></a>Init_TH_Touch</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, th_touch.o(i.Init_TH_Touch))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = Init_TH_Touch &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
+<LI><a href="#[232]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexCreate
+<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -3925,10 +3929,11 @@ Global Symbols
 <P><STRONG><a name="[80]"></a>SystemInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, system_stm32f7xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f746xx.o(.text)
 </UL>
-<P><STRONG><a name="[c7]"></a>TH_GUI</STRONG> (Thumb, 492 bytes, Stack size 24 bytes, th_gui.o(i.TH_GUI))
-<BR><BR>[Stack]<UL><LI>Max Depth = 448<LI>Call Chain = TH_GUI &rArr; GUI_CURSOR_SetPosition &rArr; GUI_CURSOR_SetPositionEx &rArr; GUI_SPRITE_SetPosition &rArr; _SetPosition &rArr; _CreateBuffer &rArr; GUI_ALLOC_GetMaxSize &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr; _Alloc &rArr;  _InitOnce (Cycle)
+<P><STRONG><a name="[c7]"></a>TH_GUI</STRONG> (Thumb, 526 bytes, Stack size 16 bytes, th_gui.o(i.TH_GUI))
+<BR><BR>[Stack]<UL><LI>Max Depth = 440<LI>Call Chain = TH_GUI &rArr; GUI_CURSOR_SetPosition &rArr; GUI_CURSOR_SetPositionEx &rArr; GUI_SPRITE_SetPosition &rArr; _SetPosition &rArr; _CreateBuffer &rArr; GUI_ALLOC_GetMaxSize &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr; _Alloc &rArr;  _InitOnce (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalClear
+<BR>[Calls]<UL><LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[2b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalClear
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_SelectLayer
 <LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_Select
 <LI><a href="#[202]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MEMDEV_Create
@@ -3945,29 +3950,31 @@ Global Symbols
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CURSOR_Select
 <LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CURSOR_GetState
 <LI><a href="#[2ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
-<LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[231]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[232]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
 <LI><a href="#[249]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[2b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trigger
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_SetColor
 <LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_GraphGrid
-<LI><a href="#[241]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 <LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
 <LI><a href="#[245]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 <LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> th_gui.o(.constdata)
 </UL>
-<P><STRONG><a name="[c6]"></a>TH_Touch</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, th_touch.o(i.TH_Touch))
-<BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = TH_Touch &rArr; Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
+<P><STRONG><a name="[c6]"></a>TH_Touch</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, th_touch.o(i.TH_Touch))
+<BR><BR>[Stack]<UL><LI>Max Depth = 400<LI>Call Chain = TH_Touch &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
-<LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[2bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_Callback
-<LI><a href="#[241]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<LI><a href="#[231]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[232]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[2bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_GetState
+<LI><a href="#[2bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_Callback
+<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> th_touch.o(.constdata)
 </UL>
-<P><STRONG><a name="[2bc]"></a>TS_IO_Delay</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, stm32746g_discovery.o(i.TS_IO_Delay))
+<P><STRONG><a name="[2bd]"></a>TS_IO_Delay</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, stm32746g_discovery.o(i.TS_IO_Delay))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = TS_IO_Delay &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
@@ -3975,7 +3982,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_Init
 </UL>
 
-<P><STRONG><a name="[2bd]"></a>TS_IO_Init</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32746g_discovery.o(i.TS_IO_Init))
+<P><STRONG><a name="[2be]"></a>TS_IO_Init</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32746g_discovery.o(i.TS_IO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = TS_IO_Init &rArr; I2Cx_Init &rArr; I2Cx_MspInit &rArr; HAL_NVIC_SetPriority &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[27a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Init
@@ -3983,7 +3990,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[31c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_I2C_InitializeIfRequired
 </UL>
 
-<P><STRONG><a name="[2be]"></a>TS_IO_Read</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, stm32746g_discovery.o(i.TS_IO_Read))
+<P><STRONG><a name="[2bf]"></a>TS_IO_Read</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, stm32746g_discovery.o(i.TS_IO_Read))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[27d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_ReadMultiple
@@ -3995,7 +4002,7 @@ Global Symbols
 <LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_ReadID
 </UL>
 
-<P><STRONG><a name="[2bf]"></a>TS_IO_Write</STRONG> (Thumb, 32 bytes, Stack size 32 bytes, stm32746g_discovery.o(i.TS_IO_Write))
+<P><STRONG><a name="[2c0]"></a>TS_IO_Write</STRONG> (Thumb, 32 bytes, Stack size 32 bytes, stm32746g_discovery.o(i.TS_IO_Write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = TS_IO_Write &rArr; I2Cx_WriteMultiple &rArr; HAL_I2C_Mem_Write &rArr; I2C_RequestMemoryWrite &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[27e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_WriteMultiple
@@ -4004,20 +4011,18 @@ Global Symbols
 <LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_TS_DisableIT
 </UL>
 
-<P><STRONG><a name="[2bb]"></a>Touch_Callback</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, th_touch.o(i.Touch_Callback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = Touch_Callback &rArr; Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_GetState
+<P><STRONG><a name="[2bc]"></a>Touch_Callback</STRONG> (Thumb, 116 bytes, Stack size 24 bytes, th_touch.o(i.Touch_Callback))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Touch_Callback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
 </UL>
 
-<P><STRONG><a name="[2c0]"></a>Touch_GetState</STRONG> (Thumb, 60 bytes, Stack size 56 bytes, touch_746g_discovery.o(i.Touch_GetState))
+<P><STRONG><a name="[2bb]"></a>Touch_GetState</STRONG> (Thumb, 60 bytes, Stack size 56 bytes, touch_746g_discovery.o(i.Touch_GetState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 384<LI>Call Chain = Touch_GetState &rArr; BSP_TS_GetState &rArr; ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_TS_GetState
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Touch_Callback
+<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
 </UL>
 
 <P><STRONG><a name="[2c1]"></a>Touch_Initialize</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, touch_746g_discovery.o(i.Touch_Initialize))
@@ -4484,7 +4489,7 @@ Global Symbols
 <P><STRONG><a name="[3]"></a>ft5336_Init</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ft5336.o(i.ft5336_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = ft5336_Init &rArr; ft5336_I2C_InitializeIfRequired &rArr; TS_IO_Init &rArr; I2Cx_Init &rArr; I2Cx_MspInit &rArr; HAL_NVIC_SetPriority &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Delay
+<BR>[Calls]<UL><LI><a href="#[2bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Delay
 <LI><a href="#[31c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_I2C_InitializeIfRequired
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> ft5336.o(.data)
@@ -4492,7 +4497,7 @@ Global Symbols
 <P><STRONG><a name="[4]"></a>ft5336_ReadID</STRONG> (Thumb, 58 bytes, Stack size 24 bytes, ft5336.o(i.ft5336_ReadID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = ft5336_ReadID &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 <LI><a href="#[31c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_I2C_InitializeIfRequired
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> ft5336.o(.data)
@@ -4506,14 +4511,14 @@ Global Symbols
 <P><STRONG><a name="[7]"></a>ft5336_TS_DetectTouch</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, ft5336.o(i.ft5336_TS_DetectTouch))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = ft5336_TS_DetectTouch &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> ft5336.o(.data)
 </UL>
 <P><STRONG><a name="[c]"></a>ft5336_TS_DisableIT</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ft5336.o(i.ft5336_TS_DisableIT))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = ft5336_TS_DisableIT &rArr; TS_IO_Write &rArr; I2Cx_WriteMultiple &rArr; HAL_I2C_Mem_Write &rArr; I2C_RequestMemoryWrite &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
+<BR>[Calls]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_TS_Start
 </UL>
@@ -4522,14 +4527,14 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>ft5336_TS_EnableIT</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ft5336.o(i.ft5336_TS_EnableIT))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = ft5336_TS_EnableIT &rArr; TS_IO_Write &rArr; I2Cx_WriteMultiple &rArr; HAL_I2C_Mem_Write &rArr; I2C_RequestMemoryWrite &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
+<BR>[Calls]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> ft5336.o(.data)
 </UL>
 <P><STRONG><a name="[175]"></a>ft5336_TS_GetGestureID</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, ft5336.o(i.ft5336_TS_GetGestureID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = ft5336_TS_GetGestureID &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 </UL>
 <BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_TS_Get_GestureId
 </UL>
@@ -4537,7 +4542,7 @@ Global Symbols
 <P><STRONG><a name="[173]"></a>ft5336_TS_GetTouchInfo</STRONG> (Thumb, 258 bytes, Stack size 40 bytes, ft5336.o(i.ft5336_TS_GetTouchInfo))
 <BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = ft5336_TS_GetTouchInfo &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 </UL>
 <BR>[Called By]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_TS_GetState
 </UL>
@@ -4545,7 +4550,7 @@ Global Symbols
 <P><STRONG><a name="[8]"></a>ft5336_TS_GetXY</STRONG> (Thumb, 346 bytes, Stack size 40 bytes, ft5336.o(i.ft5336_TS_GetXY))
 <BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = ft5336_TS_GetXY &rArr; TS_IO_Read &rArr; I2Cx_ReadMultiple &rArr; HAL_I2C_Mem_Read &rArr; I2C_RequestMemoryRead &rArr; I2C_TransferConfig &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Calls]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> ft5336.o(.data)
 </UL>
@@ -4639,6 +4644,7 @@ Global Symbols
 </UL>
 <P><STRONG><a name="[180]"></a>osDelay</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osDelay))
 <BR><BR>[Called By]<UL><LI><a href="#[277]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hello_MSG
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
 <LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_ExecIdle
 </UL>
@@ -4672,15 +4678,21 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcMutexCreate
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_InitOS
+<BR>[Called By]<UL><LI><a href="#[280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_TH_Touch
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_InitOS
 </UL>
 
 <P><STRONG><a name="[232]"></a>osMutexRelease</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexRelease))
-<BR><BR>[Called By]<UL><LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_Unlock
+<BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_GUI
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
+<LI><a href="#[280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_TH_Touch
+<LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_Unlock
 </UL>
 
 <P><STRONG><a name="[231]"></a>osMutexWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexWait))
-<BR><BR>[Called By]<UL><LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_Lock
+<BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_GUI
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
+<LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_X_Lock
 </UL>
 
 <P><STRONG><a name="[2b8]"></a>osSignalClear</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalClear))
@@ -4692,14 +4704,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrSignalSet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_GUI
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
-<LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConvCpltCallback
+<BR>[Called By]<UL><LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConvCpltCallback
 </UL>
 
 <P><STRONG><a name="[2b7]"></a>osSignalWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalWait))
 <BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_GUI
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TH_Touch
 </UL>
 
 <P><STRONG><a name="[149]"></a>osThreadCreate</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadCreate))
@@ -4760,7 +4769,7 @@ Global Symbols
 <LI><a href="#[33d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_mbx_psh
 </UL>
 
-<P><STRONG><a name="[c4]"></a>os_idle_demon</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, rtx_conf_cm.o(i.os_idle_demon))
+<P><STRONG><a name="[c4]"></a>os_idle_demon</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, rtx_conf_cm.o(i.os_idle_demon))
 <BR>[Address Reference Count : 1]<UL><LI> rt_task.o(i.rt_sys_init)
 </UL>
 <P><STRONG><a name="[34b]"></a>os_tick_init</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, rt_system.o(i.os_tick_init))
@@ -5417,7 +5426,7 @@ Local Symbols
 <P><STRONG><a name="[31c]"></a>ft5336_I2C_InitializeIfRequired</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, ft5336.o(i.ft5336_I2C_InitializeIfRequired))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ft5336_I2C_InitializeIfRequired &rArr; TS_IO_Init &rArr; I2Cx_Init &rArr; I2Cx_MspInit &rArr; HAL_NVIC_SetPriority &rArr; assert_failed &rArr; Error_Handler &rArr; LED_On &rArr; HAL_GPIO_WritePin &rArr;  assert_failed (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[2bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Init
+<BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Init
 <LI><a href="#[31d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_Get_I2C_InitializedStatus
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ft5336_ReadID
@@ -5446,7 +5455,7 @@ Local Symbols
 <LI><a href="#[27b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_GetState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[279]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Error
-<LI><a href="#[2bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Init
+<LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Init
 </UL>
 
 <P><STRONG><a name="[27c]"></a>I2Cx_MspInit</STRONG> (Thumb, 338 bytes, Stack size 32 bytes, stm32746g_discovery.o(i.I2Cx_MspInit))
@@ -5465,7 +5474,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[279]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Error
 <LI><a href="#[24e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_Mem_Read
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
+<BR>[Called By]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Read
 </UL>
 
 <P><STRONG><a name="[27e]"></a>I2Cx_WriteMultiple</STRONG> (Thumb, 58 bytes, Stack size 48 bytes, stm32746g_discovery.o(i.I2Cx_WriteMultiple))
@@ -5474,7 +5483,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[279]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Error
 <LI><a href="#[253]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_Mem_Write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
+<BR>[Called By]<UL><LI><a href="#[2c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TS_IO_Write
 </UL>
 
 <P><STRONG><a name="[88]"></a>ADC_DMAConvCplt</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, stm32f7xx_hal_adc.o(i.ADC_DMAConvCplt))
@@ -7183,12 +7192,12 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[1ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_UnlockH
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
 </UL>
-<BR>[Called By]<UL><LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawVLine
+<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawVLine
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawBitmap
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_XorPixel
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_SetPixelIndex
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_GetPixelIndex
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_FillRect
 </UL>
 
 <P><STRONG><a name="[129]"></a>_XorPixel</STRONG> (Thumb, 82 bytes, Stack size 32 bytes, guidev_32.o(i._XorPixel))

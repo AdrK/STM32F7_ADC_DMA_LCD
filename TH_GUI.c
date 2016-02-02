@@ -2,11 +2,12 @@
 #include "analyzer.h"
 
 // Extern variables
-extern Touch_struct g_Touched;
+extern Touch_struct g_Touched_Cur;
 extern uint8_t Trigger_Point;
 extern ADC_HandleTypeDef  g_AdcHandle;
 extern DMA_HandleTypeDef  g_DmaHandle;
 extern osThreadId tid_Touch;
+extern osMutexId		IDTouch_Mutex;
 // Private functions
 void Hello_MSG(void);
 void TH_GUI (void const *argument);                             // thread function
@@ -54,9 +55,7 @@ void TH_GUI (void const *argument) {
 		evt = osSignalWait(DMA_ConvCpltSig,(uint32_t)2);
 		if( evt.status == osEventTimeout)
 				Error_Handler();
-																															Anal_CH2_Reset(/*Wait finish*/);
-		//osSignalSet(tid_Touch,GUI_TouchStateReqSig);
-		
+																															Anal_CH2_Reset(/*Wait finish*/);		
 																															Anal_CH3_Set(/*Copy start*/);
 		for(i=0;i<ADC_BUFFER_LENGTH;i++)	// <- Temporary. Take the full advantage of DMA !
 		values_BUF[i]=255-values[i];
@@ -65,11 +64,14 @@ void TH_GUI (void const *argument) {
 		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
 		osSignalClear(tid_TH_GUI, DMA_ConvCpltSig);
 																															Anal_CH4_Set(/*Wait start*/);		
-		osSignalWait(GUI_TouchGetSig,(uint32_t)0);
-		GUI_CURSOR_SetPosition(g_Touched.pState->x,g_Touched.pState->y);
+		osMutexWait(IDTouch_Mutex, osWaitForever);
+		{
+			GUI_CURSOR_SetPosition(g_Touched_Cur.pState->x,g_Touched_Cur.pState->y);
+			Trigger_Point = 205;//g_Touched_Cur.MSG;
+		}
+		osMutexRelease(IDTouch_Mutex);
 																															Anal_CH4_Reset(/*Wait finish*/);
 		
-		Trigger_Point = g_Touched.MSG;
 		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
 		//if(Triggered_Sample >=20)Triggered_Sample -=20; // Offset to see the edge in the center <- bullshit ?
 		
@@ -98,8 +100,9 @@ void TH_GUI (void const *argument) {
 		
 		GUI_SetColor(GUI_YELLOW);
 		GUI_DrawCircle(15,Trigger_Point,10);
-		
+																															Anal_CH5_Set(/*Start copying to LCD*/);
 		GUI_MEMDEV_CopyToLCD(hMem0);
+																															Anal_CH5_Reset(/*Stop copying to LCD*/);
 																															Anal_CH1_Reset(/*Main loop finish*/);
     osThreadYield ();                                           // suspend thread
   }

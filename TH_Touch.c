@@ -1,8 +1,9 @@
 #include "main.h"
 // Exported variables
-Touch_struct g_Touched;
+Touch_struct g_Touched_Cur;
+osMutexDef		(Touch_Mutex);
+osMutexId			IDTouch_Mutex;
 // Static variables
-
 // Extern variables
 extern uint8_t Trigger_Point;
 extern osThreadId tid_TH_GUI;
@@ -13,7 +14,6 @@ extern volatile unsigned short values_BUF[ADC_BUFFER_LENGTH];
 
 // Extern functions
 extern void Error_Handler(void);
-Touch_struct* Touch_Callback( Touch_struct* l_Touched);
 extern uint16_t Trigger(uint8_t Trig_SP, volatile unsigned short* Signal, uint16_t Sig_Size, uint32_t Sample_Freq);
 extern void Draw_GraphGrid(uint16_t XSize, uint16_t YSize, uint8_t XDense, uint8_t YDense);
 
@@ -21,54 +21,65 @@ extern void Draw_GraphGrid(uint16_t XSize, uint16_t YSize, uint8_t XDense, uint8
 void TH_Touch (void const *argument);                             // thread function
 osThreadId tid_Touch;                                          		// thread id
 osThreadDef (TH_Touch, osPriorityNormal, 1, 0);                   // thread object
+Touch_struct Touch_Callback( Touch_struct l_Touched	);
 
 int Init_TH_Touch (void) {
   tid_Touch = osThreadCreate (osThread(TH_Touch), NULL);
+	IDTouch_Mutex = osMutexCreate(osMutex(Touch_Mutex));
+	osMutexRelease(IDTouch_Mutex);
+	if(IDTouch_Mutex == NULL)
+		Error_Handler();
   if (!tid_Touch) return(-1);
   
   return(0);
 }
 
 void TH_Touch (void const *argument) {
-	static Touch_struct* Pg_Touched = &g_Touched;
+	static Touch_struct Touched_new; // This may make just once, but how ?
+	
   while (1) {
 		osDelay(10);
-		Touch_Callback(Pg_Touched);
-		osSignalSet(tid_TH_GUI,GUI_TouchGetSig);
+		
+		Touch_GetState( Touched_new.pState );
+		
+		if( (g_Touched_Cur.pState->x != Touched_new.pState->x) ||
+				(g_Touched_Cur.pState->y != Touched_new.pState->y) )
+		{
+			osMutexWait(IDTouch_Mutex, osWaitForever);
+			{
+				g_Touched_Cur = Touch_Callback(Touched_new);
+			}
+			osMutexRelease(IDTouch_Mutex);
+		}
     osThreadYield ();                                           // suspend thread
   }
 }
 
-Touch_struct* Touch_Callback( Touch_struct* l_Touched)
+Touch_struct Touch_Callback( Touch_struct l_Touched	)
 {
-	static uint8_t PRESS_FLAG=0; // This must be static
-	TOUCH_STATE* l_pState;
-	Touch_GetState( l_pState );
-	
-	l_Touched->pState->pressed = l_pState->pressed;
-	l_Touched->pState->x = l_pState->x;
-	l_Touched->pState->y = l_pState->y;
+	static uint8_t PRESS_FLAG=0; // It must be static
+	const TOUCH_STATE* l_pState = l_Touched.pState; // It wont change, thus it can be const
 
 	if(	l_pState->pressed )
 	{
 		if(	((l_pState->x >=0)&&(l_pState->x <= 20) && (l_pState->y >=Trigger_Point-16) && (l_pState->y <=Trigger_Point+16)) || PRESS_FLAG ) // If trigger tapped, pressed or held
 		{
 			PRESS_FLAG = 1;
-			l_Touched->ID = ID_TRIGGER;
+			l_Touched.ID = ID_TRIGGER;
 		}
 		else
-			l_Touched->ID = ID_NULL;
+			l_Touched.ID = ID_NULL;
 	}
 	else
 	{
 		PRESS_FLAG = 0;
 	}
 	
-	switch( l_Touched->ID )
+	switch( l_Touched.ID )
 	{
 		case ID_TRIGGER: // in this case in MSG we have level of triggering
 		{
-			l_Touched->MSG = l_pState->y;
+			l_Touched.MSG = l_pState->y;
 			
 		} break;
 		
@@ -76,3 +87,4 @@ Touch_struct* Touch_Callback( Touch_struct* l_Touched)
 	}
 	return l_Touched;
 }
+

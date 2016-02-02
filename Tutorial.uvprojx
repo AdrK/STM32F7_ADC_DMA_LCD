@@ -431,16 +431,6 @@
               <FileType>5</FileType>
               <FilePath>.\Questions.txt</FilePath>
             </File>
-            <File>
-              <FileName>Mutex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Mutex.c</FilePath>
-            </File>
-            <File>
-              <FileName>Semaphore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Semaphore.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

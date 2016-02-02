@@ -223,8 +223,9 @@
 
 /// \brief The idle demon is running when no other thread is ready to run
 void os_idle_demon (void) {
- 
+ 	
   for (;;) {
+		__wfe();
     /* HERE: include optional user code to be executed when no thread runs.*/
   }
 }

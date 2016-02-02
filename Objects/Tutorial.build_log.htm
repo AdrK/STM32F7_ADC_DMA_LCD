@@ -22,14 +22,14 @@ Dialog DLL:      TCM.DLL V1.14.6.0
  
 <h2>Project:</h2>
 C:\Users\adria\Documents\Workspace\Keil_uVision\STM32F746_Discovery\STM32F7_ADC_DMA_LCD\Tutorial.uvprojx
-Project File Date:  01/21/2016
+Project File Date:  02/03/2016
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling TH_GUI.c...
 linking...
-Program Size: Code=89416 RO-data=25912 RW-data=644 ZI-data=2541524  
+Program Size: Code=89544 RO-data=25916 RW-data=644 ZI-data=2541548  
 FromELF: creating hex file...
 ".\Objects\Tutorial.axf" - 0 Error(s), 0 Warning(s).
 
@@ -48,38 +48,38 @@ Package Vendor: Keil
                 ::Board Support:LED:1.00 (API)
                 Keil MDK-ARM Professional Middleware for ARM Cortex-M based devices
    * Component: LED Version: 1.00
-   * Component: Touchscreen Version: 1.00
-   * Component: emWin LCD Version: 1.1
    * Component: Buttons Version: 1.00
-   * Component: GUI Builder Version: 5.30.0
+   * Component: emWin LCD Version: 1.1
+   * Component: Touchscreen Version: 1.00
    * Component: CORE Version: 5.30.0
+   * Component: GUI Builder Version: 5.30.0
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.STM32F7xx_DFP.2.3.0.pack
-                ::Device:STM32Cube Framework (API)
+                Keil::Device:STM32Cube HAL:ADC:1.0.1
                 STMicroelectronics STM32F7 Series Device Support, Drivers and Examples
-   * Component: STM32Cube Framework Version: 
    * Component: ADC Version: 1.0.1
    * Component: Cortex Version: 1.0.1
    * Component: Common Version: 1.0.1
-   * Component: Startup Version: 1.0.1
+   * Component: STM32Cube Framework Version: 
    * Component: Classic Version: 1.0.0
-   * Component: PWR Version: 1.0.1
-   * Component: RCC Version: 1.0.1
-   * Component: DMA Version: 1.0.1
+   * Component: Startup Version: 1.0.1
    * Component: LTDC Version: 1.0.1
-   * Component: DMA2D Version: 1.0.1
-   * Component: GPIO Version: 1.0.1
-   * Component: SDRAM Version: 1.0.1
-   * Component: I2C Version: 1.0.1
-   * Component: SDRAM Version: 1.0.0
-   * Component: Touch Screen Version: 1.0.0
-   * Component: Buttons Version: 1.0.0
-   * Component: Touchscreen Version: 1.0.0
-   * Component: emWin LCD Variant: RGB IF Version: 1.0.0
-   * Component: LED Version: 1.0.0
-   * Component: Basic I/O Version: 1.0.0
+   * Component: PWR Version: 1.0.1
+   * Component: DMA Version: 1.0.1
+   * Component: RCC Version: 1.0.1
    * Component: UART Version: 1.0.1
+   * Component: DMA2D Version: 1.0.1
+   * Component: I2C Version: 1.0.1
+   * Component: SDRAM Version: 1.0.1
+   * Component: GPIO Version: 1.0.1
+   * Component: Basic I/O Version: 1.0.0
+   * Component: Touch Screen Version: 1.0.0
+   * Component: SDRAM Version: 1.0.0
+   * Component: Touchscreen Version: 1.0.0
+   * Component: LED Version: 1.0.0
+   * Component: Buttons Version: 1.0.0
+   * Component: emWin LCD Variant: RGB IF Version: 1.0.0
    * Component: STM32F746G-Discovery Variant: RGB IF Version: 1.0.0
 
 <h2>Collection of Component include folders:</h2>
@@ -100,128 +100,128 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:4.3.0
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.80.0
-      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
-      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
-      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
-      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
-      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
+      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
+      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
+      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
 
    * Component: ::Board Support:LED:1.00 (API)
       Include file:  Board\Board_LED.h
 
-   * Component: ::Board Support:Touchscreen:1.00 (API)
-      Include file:  Board\Board_Touch.h
+   * Component: ::Board Support:Buttons:1.00 (API)
+      Include file:  Board\Board_Buttons.h
 
    * Component: ::Board Support:emWin LCD:1.1 (API)
       Include file:  emWin\Include\LCD_X.h
 
-   * Component: ::Board Support:Buttons:1.00 (API)
-      Include file:  Board\Board_Buttons.h
-
-   * Component: Segger.MDK-Pro::Graphics:Tools:GUI Builder:5.30.0
+   * Component: ::Board Support:Touchscreen:1.00 (API)
+      Include file:  Board\Board_Touch.h
 
    * Component: Segger.MDK-Pro::Graphics:CORE:5.30.0
+      Source file:   emWin\Sample\Template\GUI_SingleThread.c
+      Source file:   emWin\Sample\Template\GUI_MultiThread.c
+      Source file:   emWin\Sample\GUI_X\GUI_X_RTE.c
       Include file:  emWin\Include\GUI.h
       Source file:   emWin\Sample\Config\GUIConf.c
       Source file:   emWin\Sample\Template\GUI_TemplateThread.c
-      Source file:   emWin\Sample\Template\GUI_SingleThread.c
-      Source file:   emWin\Sample\GUI_X\GUI_X_RTE.c
-      Source file:   emWin\Sample\Template\GUI_MultiThread.c
       Library file:  emWin\Lib\ARM\GUI_CM4F_L.lib
 
-   * Component: ::Device:STM32Cube Framework (API)
+   * Component: Segger.MDK-Pro::Graphics:Tools:GUI Builder:5.30.0
 
    * Component: Keil::Device:STM32Cube HAL:ADC:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_adc_ex.c
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_adc.c
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_adc_ex.c
 
    * Component: Keil::Device:STM32Cube HAL:Cortex:1.0.1
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_cortex.c
 
    * Component: Keil::Device:STM32Cube HAL:Common:1.0.1
-      Include file:  Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal.c
+      Include file:  Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h
 
-   * Component: Keil::Device:Startup:1.0.1
-      Source file:   Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\system_stm32f7xx.c
-      Source file:   MDK\Device\Source\ARM\STM32F7xx_OTP.s
-      Include file:  Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h
-      Source file:   Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\arm\startup_stm32f746xx.s
-      Source file:   MDK\Device\Source\ARM\STM32F7xx_OPT.s
+   * Component: ::Device:STM32Cube Framework (API)
 
    * Component: Keil::Device:STM32Cube Framework:Classic:1.0.0
-      Include file:  MDK\Templates\Inc\main.h
-      Source file:   MDK\Templates\Src\stm32f7xx_it.c
       Include file:  CMSIS\Driver\Config\RTE_Device.h
-      Include file:  MDK\Templates\Inc\stm32f7xx_hal_conf.h
+      Source file:   MDK\Templates\Src\stm32f7xx_it.c
       Source file:   MDK\Templates\Src\stm32f7xx_hal_msp.c
+      Include file:  MDK\Templates\Inc\main.h
+      Include file:  MDK\Templates\Inc\stm32f7xx_hal_conf.h
       Source file:   MDK\Templates\Src\main.c
       Include file:  MDK\Templates\Inc\stm32f7xx_it.h
+
+   * Component: Keil::Device:Startup:1.0.1
+      Source file:   MDK\Device\Source\ARM\STM32F7xx_OTP.s
+      Source file:   MDK\Device\Source\ARM\STM32F7xx_OPT.s
+      Source file:   Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\arm\startup_stm32f746xx.s
+      Include file:  Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h
+      Source file:   Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\system_stm32f7xx.c
+
+   * Component: Keil::Device:STM32Cube HAL:LTDC:1.0.1
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_ltdc.c
 
    * Component: Keil::Device:STM32Cube HAL:PWR:1.0.1
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pwr.c
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pwr_ex.c
 
+   * Component: Keil::Device:STM32Cube HAL:DMA:1.0.1
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma_ex.c
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma.c
+
    * Component: Keil::Device:STM32Cube HAL:RCC:1.0.1
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rcc_ex.c
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rcc.c
 
-   * Component: Keil::Device:STM32Cube HAL:DMA:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma.c
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma_ex.c
-
-   * Component: Keil::Device:STM32Cube HAL:LTDC:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_ltdc.c
+   * Component: Keil::Device:STM32Cube HAL:UART:1.0.1
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_uart.c
 
    * Component: Keil::Device:STM32Cube HAL:DMA2D:1.0.1
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma2d.c
 
-   * Component: Keil::Device:STM32Cube HAL:GPIO:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_gpio.c
+   * Component: Keil::Device:STM32Cube HAL:I2C:1.0.1
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c_ex.c
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c.c
 
    * Component: Keil::Device:STM32Cube HAL:SDRAM:1.0.1
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_sdram.c
       Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_fmc.c
 
-   * Component: Keil::Device:STM32Cube HAL:I2C:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c.c
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c_ex.c
+   * Component: Keil::Device:STM32Cube HAL:GPIO:1.0.1
+      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_gpio.c
+
+   * Component: Keil.STM32F746G-Discovery::Board Support:Drivers:Basic I/O:1.0.0
+      Source file:   Drivers\BSP\STM32746G-Discovery\stm32746g_discovery.c
+      Include file:  Drivers\BSP\STM32746G-Discovery\stm32746g_discovery.h
+
+   * Component: Keil.STM32F746G-Discovery::Board Support:Drivers:Touch Screen:1.0.0
+      Include file:  Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_ts.h
+      Source file:   Drivers\BSP\Components\ft5336\ft5336.c
+      Source file:   Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_ts.c
 
    * Component: Keil.STM32F746G-Discovery::Board Support:Drivers:SDRAM:1.0.0
       Include file:  Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.h
       Source file:   Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.c
 
-   * Component: Keil.STM32F746G-Discovery::Board Support:Drivers:Touch Screen:1.0.0
-      Source file:   Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_ts.c
-      Source file:   Drivers\BSP\Components\ft5336\ft5336.c
-      Include file:  Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_ts.h
-
-   * Component: Keil.STM32F746G-Discovery::Board Support:Buttons:1.0.0
-      Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\Buttons_746G_Discovery.c
-
    * Component: Keil.STM32F746G-Discovery::Board Support:Touchscreen:1.0.0
       Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\Touch_746G_Discovery.c
-
-   * Component: Keil.STM32F746G-Discovery::Board Support:emWin LCD:RGB IF:1.0.0
-      Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\LCD_X.c
 
    * Component: Keil.STM32F746G-Discovery::Board Support:LED:1.0.0
       Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\LED_746G_Discovery.c
 
-   * Component: Keil.STM32F746G-Discovery::Board Support:Drivers:Basic I/O:1.0.0
-      Include file:  Drivers\BSP\STM32746G-Discovery\stm32746g_discovery.h
-      Source file:   Drivers\BSP\STM32746G-Discovery\stm32746g_discovery.c
+   * Component: Keil.STM32F746G-Discovery::Board Support:Buttons:1.0.0
+      Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\Buttons_746G_Discovery.c
 
-   * Component: Keil::Device:STM32Cube HAL:UART:1.0.1
-      Source file:   Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_uart.c
+   * Component: Keil.STM32F746G-Discovery::Board Support:emWin LCD:RGB IF:1.0.0
+      Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\LCD_X.c
 
    * Component: Keil::Graphics Display:STM32F746G-Discovery:RGB IF:1.0.0
       Source file:   MDK\Boards\ST\STM32F746G_Discovery\Common\LCDConf.c
