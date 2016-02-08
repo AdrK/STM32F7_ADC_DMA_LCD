@@ -31,7 +31,7 @@
 #pragma anon_unions
 typedef struct {
 	uint8_t ID;
-	TOUCH_STATE* pState;
+	TOUCH_STATE pState;
 	union {
 		uint32_t MSG_32;
 		uint16_t MSG_16;

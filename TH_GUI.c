@@ -64,12 +64,14 @@ void TH_GUI (void const *argument) {
 		HAL_ADC_Start_DMA(&g_AdcHandle, values, ADC_BUFFER_LENGTH);
 		osSignalClear(tid_TH_GUI, DMA_ConvCpltSig);
 																															Anal_CH4_Set(/*Wait start*/);		
+		
 		osMutexWait(IDTouch_Mutex, osWaitForever);
 		{
-			GUI_CURSOR_SetPosition(g_Touched_Cur.pState->x,g_Touched_Cur.pState->y);
-			Trigger_Point = 205;//g_Touched_Cur.MSG;
+			GUI_CURSOR_SetPosition(g_Touched_Cur.pState.x,g_Touched_Cur.pState.y);
+			Trigger_Point = g_Touched_Cur.MSG;
 		}
 		osMutexRelease(IDTouch_Mutex);
+		
 																															Anal_CH4_Reset(/*Wait finish*/);
 		
 		Triggered_Sample = Trigger(Trigger_Point, values_BUF, ADC_BUFFER_LENGTH, 1348000UL);
